@@ -1,6 +1,119 @@
-.postcontainer {
+.postContainer {
+    background-color: rgb(250, 250, 250);
     display: flex;
-    margin: 0 auto;
-    border: 1px solid black;
-    width: 60%;
+    margin: 10rem auto 0;
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+    width: 80%;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-shadow: 0.3rem 0.2rem 10px  rgba(0, 0, 0, 0.5);
+}
+
+.userBox {
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    font-weight: 800;
+}
+
+.userBox_Image {
+    border-radius: 50%;
+    height: 5rem;
+    width: auto;
+    background-color: grey;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+}
+
+ .userBox_Image:hover {
+     transition: all .3s;
+     transform: translateY(0.2rem);
+}
+
+.userBox_Image:active{
+    transform: translateY(0.3rem);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
+}
+
+.userBox_Label {
+    margin: auto 1rem;
+}
+
+.userBox_EditButton {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    margin: auto 0;
+}
+
+.imageBox {
+    position: relative;
+    display: flex;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    background-color: black;
+}
+
+.imageBox_Image {
+    border-radius: 0.2rem;
+}
+
+.imageBox_Icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    right: 0;
+    margin-right: 2rem;
+}
+
+.imageBox_List {
+    list-style-type: none;
+    display: inline;
+}
+
+.imageBox_ListItem {
+    color: white;
+    display: inline;
+    margin: 2rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.imageBox_Icon:hover {
+    transition: all .3s;
+    transform: scale(1.5);
+}
+
+.textBox {
+    display: block;
+    text-align: center; 
+    min-height: 18rem;
+    position: relative;
+}
+
+.textBox :nth-child(2) {
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+
+.textBox_Headline {
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 1rem;
+}
+
+.textBox_Paragraph {
+    text-align: left;
+}
+
+.textBox_Button {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
 }

@@ -9,7 +9,7 @@ html{
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Playfair Display', 'Roboto' ,sans-serif;
+  font-family: 'Roboto' ,sans-serif;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1.6rem;
 }
@@ -17,4 +17,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
 }
