@@ -1,7 +1,6 @@
 import React from 'react';
 
 import MainNavigation from './../Navigation/MainNavigation';
-import { Route } from 'react-router-dom';
 
 const Header = (props) => {
     return ( 

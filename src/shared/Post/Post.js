@@ -37,22 +37,34 @@ const Post = (props) => {
                                 <FcLike className={styles.imageBox_Icon} />
                                 :
                                 <FcLikePlaceholder className={styles.imageBox_Icon} />}
+                            <span className={styles.imageBox_Span}>Like</span>
                         </li>
                         <li className={styles.imageBox_ListItem} onClick={userHandler}>
-                            {User ? <RiUserLine className={styles.imageBox_Icon} />
+                            {User ?
+                                <>
+                                    <RiUserLine className={styles.imageBox_Icon} />
+                                    <span className={styles.imageBox_Span}>Unfollow</span>
+                                </>
                                 :
-                                <RiUserAddLine className={styles.imageBox_Icon} />}
+                                <>
+                                    <RiUserAddLine className={styles.imageBox_Icon} />
+                                    <span className={styles.imageBox_Span}>Follow</span>
+                                </>}
+
                         </li>
                         <li className={styles.imageBox_ListItem} >
                             <RiShareLine className={styles.imageBox_Icon} />
+                            <span className={styles.imageBox_Span}>Share</span>
                         </li>
                     </ul>
                 </div>
             </div>
             <div className={styles.textBox} >
                 <h3 className={styles.textBox_Headline}>Here comes the Headline of the Post</h3>
-                <p className={styles.textBox_Paragraph}>Here comes the comment about the posted picture.</p>
-                <button className={ `${maps.MapsButton} ${styles.textBox_Button}`}>View on Google Maps</button>
+                <p className={styles.textBox_Paragraph}>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                </p>
+                <button className={`${maps.MapsButton} ${styles.textBox_Button}`}>View on Google Maps</button>
             </div>
         </div>
     );

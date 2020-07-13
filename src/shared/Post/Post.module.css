@@ -84,11 +84,34 @@
     display: inline;
     margin: 2rem;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .imageBox_Icon:hover {
     transition: all .3s;
     transform: scale(1.5);
+}
+
+.imageBox_Span {
+    visibility: hidden;
+    width: 12rem;
+    background-color: lightgrey;
+    color:darkslategrey;
+    text-align: center;
+    border-radius: 6px;
+    padding: .3rem 0;
+    position: absolute;
+    z-index: 10;
+    top: -0.5rem;
+    left: 105%;
+    opacity: 0;
+}
+
+.imageBox_ListItem:hover .imageBox_Span {
+    transition: all .3s;
+    transform: translateX(1rem);
+    visibility: visible;
+    opacity: 1;
 }
 
 .textBox {
@@ -110,10 +133,12 @@
 
 .textBox_Paragraph {
     text-align: left;
+    overflow: auto;
+    margin-bottom: 0;
 }
 
 .textBox_Button {
-    position: absolute;
-    bottom: 3rem;
-    right: 3rem;
+    float: right;
+    margin-bottom: 3rem;
+    margin-right: 3rem;
 }
