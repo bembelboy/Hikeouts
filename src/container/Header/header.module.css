@@ -1,0 +1,75 @@
+.headerContainer {
+    background-image: url('../../images/legs-1627988_1920.jpg');
+    background-color: rgb(0, 0, 0);
+    height: 100vh;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: -2rem;
+}
+
+.headerBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.headerBox_H1 {
+    color: white;
+    z-index: 30;
+    font-size: 15rem;
+    text-align: center;
+    margin-top: 20vh;
+    animation-name: MoveInTop;
+    animation-duration: 1s;
+}
+
+.headerBox_H2 {
+    color: white;
+    z-index: 30;
+    font-size: rem;
+    text-align: center;
+    margin-top: -2rem;
+    margin-bottom: 5vh;
+    animation-name: MoveInRight;
+    animation-duration: 1s; 
+}
+
+.headerBox_Span {
+    color: rgb(58, 39, 66);
+    font-size: 17rem;
+}
+
+
+
+
+
+
+/* KEYFRAMES */
+
+
+@keyframes MoveInTop {
+    from {
+        opacity: 0;
+        transform: translateY(-20rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes MoveInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

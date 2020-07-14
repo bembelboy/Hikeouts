@@ -2,7 +2,7 @@ import React from 'react';
 
 import NavItem from './NavItem';
 
-const NavList = (props) => {
+const NavList = (props) => { //Used to show the NavItems
 
     const NavigationList = props.NavItems.map(item => {
         return <NavItem

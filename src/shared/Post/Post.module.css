@@ -142,3 +142,12 @@
     margin-bottom: 3rem;
     margin-right: 3rem;
 }
+
+.textBox_TimeMark {
+    font-size: small;
+    color: lightgrey;
+    text-align: left;
+    position: absolute;
+    bottom: 1rem;
+    left: 3rem;
+}

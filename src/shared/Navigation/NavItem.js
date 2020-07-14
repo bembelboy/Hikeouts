@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { NavLink } from 'react-router-dom';
-import NavList from './NavList';
+
+
 
 const NavItem = (props) => {
     return (

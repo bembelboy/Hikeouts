@@ -1,10 +1,10 @@
 import React from 'react';
 
+import Header from '../container/Header/header'
+
 const LandingPage = (props) => {
     return ( 
-        <div>
-        <h2>This is the Landingpage</h2>
-        </div>
+        <Header />
      );
 }
  
