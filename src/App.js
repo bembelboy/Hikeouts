@@ -7,12 +7,12 @@ import AuthPage from './pages/AuthPage';
 
 function App() {
   return (
-      <BrowserRouter>
-        <div className="App">
-          <Route component={LandingPage} path='/' exact />
-          <Route component={AuthPage} path='/auth' exact />
-        </div>
-      </BrowserRouter>
+    <BrowserRouter>
+      <div className="App">
+        <Route component={LandingPage} path='/' exact />
+        <Route component={AuthPage} path='/auth' exact />
+      </div>
+    </BrowserRouter>
   );
 }
 
