@@ -3,5 +3,8 @@
     display: flex;
     justify-content: space-evenly;
     margin: 0px;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
     padding-inline-start: 0;
+    border-bottom: 1px solid lightslategrey;
 }

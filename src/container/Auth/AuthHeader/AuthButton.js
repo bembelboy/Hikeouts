@@ -7,7 +7,7 @@ const AuthButton = (props) => {
 
     let ListItem = <li className={styles.ListItem} onClick={props.clicked}>
         <Link className={styles.ListItem_Link} replace
-        to={location => ({...location, pathname: 'auth', hash: props.hash})}
+        to={props.link}
         >
             {props.name}
         </Link>
@@ -16,7 +16,7 @@ const AuthButton = (props) => {
     if (props.selected) {
         ListItem = <li className={styles.ListItem_Active} onClick={props.clicked}>
             <Link className={styles.ListItem_Active_Link} replace
-            to={location => ({...location, pathname: 'auth', hash: props.hash})}
+            to={props.link}
              >
                 {props.name}
             </Link>

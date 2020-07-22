@@ -15,7 +15,7 @@ const AuthHeadline = (props) => {
                 classNames='fade'
             >
                 <h2 className={styles.AuthForm_H2}>{props.selected ?
-                'Become a SpottR' : 'Welcome Back!'}
+                    'Become a SpottR' : 'Welcome Back!'}
                 </h2>
             </CSSTransition>
         </SwitchTransition>

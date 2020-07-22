@@ -1,0 +1,26 @@
+.formContainer {
+}
+
+.form_Box {
+    display: inline-block;
+    width: 80%;
+    margin: 2rem;
+    height: auto;
+    position: relative;
+}
+
+.form_Label {
+    position: absolute;
+    color: white;
+    display: inline;
+    top: 0.75rem;
+    left: 4rem;
+}
+
+.form_Input {
+    display: inline;
+    border-radius: 2px;
+    border: none;
+    text-align: center;
+    padding: 1rem 2rem;
+}

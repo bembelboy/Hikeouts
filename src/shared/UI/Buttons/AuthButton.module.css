@@ -1,0 +1,23 @@
+.Auth_Button {
+    color: white;
+    background-color: rgb(67, 67, 196);
+    border-radius: 2px;
+    border: 1px solid rgb(67, 67, 196);
+    display: block;
+    margin: 5rem auto 1rem ;
+    padding: 2rem 3rem;
+    font-weight: bold;
+    font-size: medium;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    min-width: 25rem;
+}
+
+.Auth_Button:hover {
+    border: solid 1px white;
+    background-color: rgb(96, 96, 128);
+}
+
+.Auth_Button:active {
+    transform: translateY(1rem);
+}
