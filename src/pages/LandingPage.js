@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Header from '../container/Header/header'
+import Header from '../container/Landing/Header/header'
 
 const LandingPage = (props) => {
     return ( 

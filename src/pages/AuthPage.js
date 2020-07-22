@@ -1,20 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import AuthContextProvider, { AuthContext } from '../context/auth-context';
+import AuthHeader from '../container/AuthHeader/AuthHeader';
 
+import styles from './AuthPage.module.css';
 
 
 
 const AuthPage = (props) => {
-    const authContext = useContext(AuthContext)
-    const showValue = () => {
-        console.log(authContext.isAuth._currentValue)
-        authContext.login()
-    }
+
+    const [switchAuth, setSwitchAuth] = useState({
+        signup: true,
+        login: false,
+        link: 'auth/login'
+    });
+
+    const switchAuthHandler = useCallback(() => {
+        let authObject;
+        if (switchAuth.signup) {
+            authObject = {
+                signup: false,
+                login: true,
+                link: '/auth/signup'
+            }
+        } else {
+            authObject = {
+                signup: true,
+                login: false,
+                link: '/auth/login'
+            }
+        }
+        setSwitchAuth(authObject);
+    })
+
+    useEffect(() => {
+        setSwitchAuth({
+            signup: true,
+            login: false,
+            link: 'auth/login'
+        })
+    }, [])
+
     return ( 
-        <div>
-            <h2>Authorization</h2>
-            <button onClick={showValue} >Login</button>
+        <div className={styles.AuthFormContainer}>
+            <AuthHeader status={switchAuth} clicked={switchAuthHandler} />
         </div>
      );
 }

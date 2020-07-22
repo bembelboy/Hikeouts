@@ -1,0 +1,36 @@
+.ListItem_Active , .ListItem {
+    list-style-type: none;
+    font-size: x-large;
+    min-width: 20rem;
+    min-height: 4rem;
+    padding: 2rem 1rem;
+    display: block;
+    text-align: center;
+    border-radius: 3px;
+    transition: all .5s;
+}
+
+.ListItem {
+    color: white;
+    background-color: rgb(29, 45, 57);
+}
+
+.ListItem_Active{
+    background-color: rgb(99, 199, 91);
+}
+
+.ListItem:hover , .ListItem_Active:hover {
+    background-color: rgb(99, 199, 139);
+}
+
+.ListItem_Link {
+    transition: all .5s;
+    text-decoration: none;
+    color: lightslategray;
+}
+
+.ListItem_Active_Link {
+    transition: all .5s;
+    text-decoration: none;
+    color: white;
+}

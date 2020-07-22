@@ -1,0 +1,7 @@
+
+.AuthForm_List {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0px;
+    padding-inline-start: 0;
+}

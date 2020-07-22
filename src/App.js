@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Route component={LandingPage} path='/' exact />
-        <Route component={AuthPage} path='/auth' exact />
+        <Route component={AuthPage} path='/auth/:mode' exact />
       </div>
     </BrowserRouter>
   );

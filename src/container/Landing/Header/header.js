@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 //COMPONENTS
-import Backdrop from '../../shared/Backdrop/Backdrop';
-import AuthLink from '../Landing/AuthLink';
+import Backdrop from '../../../shared/Backdrop/Backdrop';
+import AuthLink from '../AuthLink';
 //STYLING
 import styles from './header.module.css';
 
@@ -17,7 +17,7 @@ const Header = (props) => {
                     <h1 className={styles.headerBox_H1}>Spott<span className={styles.headerBox_Span}>R</span> s</h1>
                     <h2 className={styles.headerBox_H2}>Discover everything around you!</h2>
                     <AuthLink
-                        link='/auth'
+                        link='/auth/signup'
                         name='Go to Login'
                     />
                 </div>
