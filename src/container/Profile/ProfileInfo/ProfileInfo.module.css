@@ -1,0 +1,67 @@
+.ProfileInfoContainer {
+    margin: 60rem auto 3rem;
+    background-color: salmon;
+    width: 80%;
+    height: 100%;
+}
+
+
+
+
+
+.ProfileInfo_ImageBox {
+    display: block;
+    position: fixed;
+    height: 50rem;
+    width: 100%;
+    top:0;
+    right: 0;
+    z-index: -1;
+}
+
+.ProfileInfo_BackgroundImage {
+    width: 100%;
+    height: 40rem;
+    object-fit: cover;
+}
+
+.ProfileInfo_Image {
+    position: fixed;
+    border-radius: 50%;
+    width: 30rem;
+    height: auto;
+    top: 20rem;
+    left: 10rem;
+}
+
+.ProfileInfo_Label {
+    position: fixed;
+    top: 35rem;
+    left: 10rem;
+    color: black;
+    font-size: 2.5rem;
+}
+
+.ProfileInfo_LabelSpan {
+opacity: 0.9;
+}
+
+
+
+
+
+.ProfileInfo_IconBox {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    min-height: 10rem;
+    padding-left: 35rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ProfileInfo_Icon {
+    height: 5rem;
+    width: auto;
+    color: black;
+    margin: auto 0;
+}

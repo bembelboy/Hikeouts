@@ -5,7 +5,9 @@ import styles from './AuthLink.module.css';
 
 const AuthLink = (props) => {
     return (
-            <Link to={props.link} className={`${styles.AuthLinkBox} ${styles.AuthLinkBox_Link}`}>
+            <Link className={`${styles.AuthLinkBox} ${styles.AuthLinkBox_Link}`} 
+            to={props.link} onClick={props.clicked}
+            >
                 {props.name}
             </Link>
 
