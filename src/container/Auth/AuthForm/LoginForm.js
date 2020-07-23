@@ -20,7 +20,7 @@ const LoginForm = (props) => {
                 >Password:
                 </label>
                 <input id='password' type='password' placeholder='password' className={styles.form_Input} />
-                <AuthSubmitButton selected={props.selected} />
+                <AuthSubmitButton selected={props.selected}  buttonLabel={props.buttonLabel}/>
             </div>
         </form>
     );

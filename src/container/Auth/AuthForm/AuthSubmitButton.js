@@ -1,25 +1,22 @@
 import React from 'react';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 
 import styles from '../../../shared/UI/Buttons/AuthButton.module.css';
+import './AuthSubmitButton.css';
+
+
 const AuthSubmitButton = (props) => {
 
     return (
-        <SwitchTransition>
-            <CSSTransition key={props.selected ? 'Signup' : 'Login'}
-                addEndListener={(node, done) => {
-                    node.addEventListener("transitionend", done, false);
-                }}
-                classNames='fade'
-            >
-                <button className={styles.Auth_Button}>
-                    {props.selected ?
-                        'Disover Now !' :
-                        'Go to NewsFeed'
-                    }
-                </button>
-            </CSSTransition>
-        </SwitchTransition>
+        <CSSTransition
+            unmountOnExit
+            in={props.selected}
+            timeout={{ appear: 300, enter: 300, exit: 300 }}
+            classNames='roll'
+            appear
+        >
+            <button className={styles.Auth_Button}>{props.buttonLabel}</button>
+        </CSSTransition>
     );
 }
 
