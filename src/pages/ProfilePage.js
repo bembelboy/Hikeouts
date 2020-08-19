@@ -18,15 +18,10 @@ const ProfilePage = (props) => {
 
 
     //LIFECYCLE
-    useEffect(useCallback(() => {
+    useEffect(() => {
         setUser(DUMMY_USER)
+        setPostArray(DUMMY_POST_ARRAY)
     }, [])
-    )
-
-    useEffect(useCallback(() => {
-            setPostArray(DUMMY_POST_ARRAY)
-    }, [])
-    )
 
 
     //FUNCTIONS
@@ -40,17 +35,6 @@ const ProfilePage = (props) => {
 
 
     //COMPONENTLOGIC
-    let PostList = (
-        <div className={styles.Spinner_Box}>
-            <Spinner />
-        </div>
-    )
-    if(PostListState) {
-        PostList = (
-            <PostList PostArray={PostArray} />
-        )
-    }
-
     let UserPage = (
         <div className={styles.Spinner_Box}>
             <Spinner />
@@ -70,7 +54,7 @@ const ProfilePage = (props) => {
                 <InfoList info={user.info} />
             </>
         )
-    } else if (PostListState === true) {
+    } else if (user && PostListState === true) {
         UserPage = (
             <>
                 <div>
@@ -79,8 +63,8 @@ const ProfilePage = (props) => {
                         profilePic={user.image} backgroundImage={user.backgroundImage}
                         showPostList={showPostList} showInfoList={showInfoList}
                     />
+                <PostList PostArray={PostArray} />
                 </div>
-                {PostList}
             </>
         )
     }

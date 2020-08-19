@@ -1,21 +1,31 @@
-.ProfileHeaderContainer {
-    margin: 60rem auto 3rem;
-    background-color: salmon;
-    width: 80%;
-    height: 100%;
-}
-
-
-
 
 
 .ProfileHeader_ImageBox {
+    position: fixed;
     display: block;
-    height: 50rem;
+    height: 31vh;
     width: 100%;
-    top:0;
-    right: 0;
-    z-index: -1;
+    z-index: 30;
+    top: 0;
+    left:0;
+    background-color: white;
+}
+
+
+.ProfileHeader_BackgroundImage {
+    width: 100%;
+    height: 23vh;
+    object-fit: cover;
+}
+
+.ProfileHeader_Image {
+    position: absolute;
+    border-radius: 50%;
+    width: 23vh;
+    height: 23vh;
+    top: 5vh;
+    left: 8vh;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.7);
 }
 
 .ProfileHeader_Image:hover + .ProfileHeader_Label {
@@ -25,25 +35,10 @@
     opacity: 1;
 }
 
-.ProfileHeader_BackgroundImage {
-    width: 100%;
-    height: 40rem;
-    object-fit: cover;
-}
-
-.ProfileHeader_Image {
-    position: fixed;
-    border-radius: 50%;
-    width: 30rem;
-    height: 30rem;
-    top: 20rem;
-    left: 10rem;
-}
-
 .ProfileHeader_Label {
-    position: fixed;
-    top: 35rem;
-    left: 11rem;
+    position: absolute;
+    top: 15vh;
+    left: 15vh;
     color: white;
     font-size: 2.5rem;
     text-align: center;
@@ -63,17 +58,18 @@ opacity: 0.9;
 .ProfileHeader_IconBox {
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     width: 100%;
-    min-height: 10rem;
+    height: 7vh;
     padding-left: 35rem;
     display: flex;
     justify-content: space-evenly;
 }
 
 .ProfileHeader_Icon {
-    height: 5rem;
+    height: 4vh;
     width: auto;
     color: black;
     margin: auto 0;
+    padding-bottom: 1vh;
 }
 
 .ProfileHeader_Icon:hover {
