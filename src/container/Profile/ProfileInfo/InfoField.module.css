@@ -1,1 +1,25 @@
 
+.InfoField_Box{
+    display: block;
+    background-color: whitesmoke;
+    width: 80%;
+    margin: 3rem auto 0 auto;
+    max-height: 20rem;
+    overflow: auto;
+    padding: 2rem 4rem;
+    border: solid 1px lightgray;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+.InfoField_Box:first-of-type {
+    margin-top: 7.5rem;
+}
+
+.InfoField_Heading {
+    text-align: left;
+}
+
+.InfoField_Paragraph {
+    text-align: left;
+}

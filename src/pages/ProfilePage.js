@@ -1,38 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import DUMMY_USER from '../DUMMY_DATA/DUMMY_USER';
+import { DUMMY_POST_ARRAY } from '../DUMMY_DATA/DUMMY_POSTS';
 
-import ProfileInfo from '../container/Profile/ProfileInfo/ProfileInfo';
+import ProfileHeader from '../container/Profile/ProfileHeader';
+import InfoList from '../container/Profile/ProfileInfo/InfoList';
+import PostList from '../container/Profile/ProfilePosts/PostList';
+import Spinner from '../shared/UI/Spinner/Spinner';
+
+import styles from './ProfilePage.module.css';
 
 const ProfilePage = (props) => {
-    const [user, setUser] = useState({
-        id: 1,
-        name: 'DerpDerp',
-        image: 'https://www.sebastiangahntz.de/design/wp-content/uploads/2019/04/Sebastian_Gahntz_Geile_Sau_2011.jpg',
-        backgroundImage: 'https://www.paintgallery.de/stilleben_mit_pflaumen_trauben_pfirsichen_und_haselnuessen_k010113.jpg',
-        from: {
-            city: 'Berlin',
-            quarter: 'Neuköln'
-        },
-        info: [
-            {
-                heading: 'Likes',
-                paragraph: 'Hiking, Jogging and having Fun'
-            },
-            {
-                heading: 'What am I looking for',
-                paragraph: 'For the hottest places in an Suburban area'
-            }
-        ],
-        posts: [],
-    })
 
+    //STATE
+    const [user, setUser] = useState();
+    const [PostListState, setPostListState] = useState(false);
+    const [PostArray, setPostArray] = useState();
+
+
+    //LIFECYCLE
+    useEffect(useCallback(() => {
+        setUser(DUMMY_USER)
+    }, [])
+    )
+
+    useEffect(useCallback(() => {
+            setPostArray(DUMMY_POST_ARRAY)
+    }, [])
+    )
+
+
+    //FUNCTIONS
+    const showPostList = useCallback(() => {
+        setPostListState(true);
+    }, [])
+
+    const showInfoList = useCallback(() => {
+        setPostListState(false);
+    }, [])
+
+
+    //COMPONENTLOGIC
+    let PostList = (
+        <div className={styles.Spinner_Box}>
+            <Spinner />
+        </div>
+    )
+    if(PostListState) {
+        PostList = (
+            <PostList PostArray={PostArray} />
+        )
+    }
+
+    let UserPage = (
+        <div className={styles.Spinner_Box}>
+            <Spinner />
+        </div>
+    );
+
+    if (user && PostListState === false) {
+        UserPage = (
+            <>
+                <div>
+                    <ProfileHeader id={user.id}
+                        name={user.name} location={user.from}
+                        profilePic={user.image} backgroundImage={user.backgroundImage}
+                        showPostList={showPostList} showInfoList={showInfoList}
+                    />
+                </div>
+                <InfoList info={user.info} />
+            </>
+        )
+    } else if (PostListState === true) {
+        UserPage = (
+            <>
+                <div>
+                    <ProfileHeader id={user.id}
+                        name={user.name} location={user.from}
+                        profilePic={user.image} backgroundImage={user.backgroundImage}
+                        showPostList={showPostList} showInfoList={showInfoList}
+                    />
+                </div>
+                {PostList}
+            </>
+        )
+    }
 
     return (
-        <div>
-            <ProfileInfo  id={user.id}
-             name={user.name} location={user.from}
-             info={user.info} profilePic={user.image} backgroundImage={user.backgroundImage}
-             />
-        </div>
+        UserPage
     );
 }
 
