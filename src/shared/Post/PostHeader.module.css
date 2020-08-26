@@ -1,0 +1,37 @@
+.PostHeader {
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    font-weight: 800;
+}
+
+.PostHeader_Image {
+    border-radius: 50%;
+    height: 5rem;
+    width: auto;
+    background-color: grey;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+}
+
+.PostHeader_Image:hover {
+    transition: all .3s;
+    transform: translateY(0.2rem);
+}
+
+.PostHeader_Image:active{
+   transform: translateY(0.3rem);
+   box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
+}
+
+.PostHeader_Label {
+   margin: auto 1rem;
+}
+
+.PostHeader_EditButton {
+   position: absolute;
+   top: 2rem;
+   right: 3rem;
+   margin: auto 0;
+}

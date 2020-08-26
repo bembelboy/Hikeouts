@@ -1,0 +1,11 @@
+.postContainer {
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    margin: 5rem auto 0;
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+    width: 80%;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-shadow: 0.3rem 0.2rem 10px  rgba(0, 0, 0, 0.5);
+}

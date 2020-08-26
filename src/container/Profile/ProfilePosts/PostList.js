@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './PostList.module.css';
 
-import Post from '../../../shared/Post/Post';
+import Post from '../../../shared/Post/PostMain';
 
 
 const PostList = (props) => {

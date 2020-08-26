@@ -1,0 +1,37 @@
+.PostTextBox {
+    display: block;
+    text-align: center; 
+    min-height: 18rem;
+    position: relative;
+}
+
+.PostTextBox :nth-child(2) {
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+
+.PostTextBox_Headline {
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 1rem;
+}
+
+.PostTextBox_Paragraph {
+    text-align: left;
+    overflow: auto;
+    margin-bottom: 0;
+}
+
+.PostTextBox_Button {
+    float: right;
+    margin-bottom: 3rem;
+    margin-right: 3rem;
+}
+
+.PostTextBox_TimeMark {
+    font-size: small;
+    color: lightgrey;
+    text-align: left;
+    position: absolute;
+    bottom: 1rem;
+    left: 3rem;
+}

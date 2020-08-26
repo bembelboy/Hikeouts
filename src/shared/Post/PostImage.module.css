@@ -1,0 +1,68 @@
+.PostImage {
+    position: relative;
+    display: flex;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    background-color: black;
+}
+
+.PostImage_Image {
+    border-radius: 0.2rem;
+}
+
+.PostImage_Icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: absolute;
+    z-index: 10;
+    bottom: 1rem;
+    right: 0;
+    margin-right: 2rem;
+}
+
+.PostImage_List {
+    list-style-type: none;
+    display: inline;
+}
+
+.PostImage_ListItem {
+    color: white;
+    display: inline;
+    margin: 2rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.PostImage_Icon{
+    transition: all .3s;
+} 
+
+.PostImage_Icon:hover {
+    transform: scale(1.5);
+}
+
+.PostImage_Span {
+    visibility: hidden;
+    width: 12rem;
+    background-color: lightgrey;
+    color:darkslategrey;
+    text-align: center;
+    transition:all .3s ;
+    border-radius: 6px;
+    padding: .3rem 0;
+    position: absolute;
+    z-index: 10;
+    top: -0.5rem;
+    left: 105%;
+    opacity: 0;
+}
+
+.PostImage_ListItem:hover .PostImage_Span {
+    transform: translateX(1rem);
+    visibility: visible;
+    opacity: 1;
+}
