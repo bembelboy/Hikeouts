@@ -1,6 +1,9 @@
 import React from 'react';
-
+import styles from './NavList.module.css';
+//COMPONENTS
 import NavItem from './NavItem';
+
+
 
 const NavList = (props) => { //Used to show the NavItems
 
@@ -13,7 +16,9 @@ const NavList = (props) => { //Used to show the NavItems
         />
     })
     return (
-        NavigationList
+        <ul className={styles.NavList_MenuLinks} >
+            {NavigationList}
+        </ul>
     );
 }
 
