@@ -26,13 +26,7 @@
     top: 5vh;
     left: 8vh;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.7);
-}
-
-.ProfileHeader_Image:hover + .ProfileHeader_Label {
-    visibility: visible;
     transition: all .4s ease-out;
-    transform: translateX(30rem);
-    opacity: 1;
 }
 
 .ProfileHeader_Label {
@@ -40,10 +34,20 @@
     top: 15vh;
     left: 15vh;
     color: white;
+    background-color: rgb(58, 39, 66);
+    padding: 2rem 3rem;
+    border-radius: 4rem;
     font-size: 2.5rem;
     text-align: center;
     visibility: hidden;
     opacity: 0;
+    transition: all .4s ease-out;
+}
+
+.ProfileHeader_Image:hover + .ProfileHeader_Label {
+    visibility: visible;
+    transform: translateX(30rem);
+    opacity: 1;
 }
 
 
@@ -62,17 +66,18 @@ opacity: 0.9;
     padding-left: 35rem;
     display: flex;
     justify-content: space-evenly;
+    background-color: rgb(58, 39, 66);
 }
 
 .ProfileHeader_Icon {
     height: 4vh;
     width: auto;
-    color: black;
+    color: white;
     margin: auto 0;
     padding-bottom: 1vh;
+    transition: all .3s;
 }
 
 .ProfileHeader_Icon:hover {
     transform: scale(1.2);
-    transition: all .3s;
 }
