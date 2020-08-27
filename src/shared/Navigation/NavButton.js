@@ -1,20 +1,19 @@
 import React from 'react';
+import classnames from 'classnames';
 
 import styles from './NavButton.module.css';
 
+
 const NavButton = (props) => {
+    let classNames = classnames(styles.NavButton_Icon, { [styles.active]: props.menuOpen })
     return (
-        <>
-            <input type='checkbox' id='openmenu' className={`${styles.NavButton_Checkbox} ${styles.NavButton_OpenMenu}`} />
-            <div className={styles.NavButton_Icon} onClick={props.clickHandler}>
-                <label htmlFor='openmenu' className={styles.NavButton_HamburgerLabel} >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </label>
-            </div>
-        </>
+        <div className={classNames}
+            onClick={props.clickHandler}>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+        </div>
     );
 }
 

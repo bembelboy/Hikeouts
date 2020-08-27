@@ -1,20 +1,16 @@
-.NavButton_Checkbox {
-    position: absolute;
-    z-index: 3;
-    top: 5vh;
-    left: 5vw;
-    width: 10vw;
-    opacity: 0;
-    height: 6vh;
-}
 
 .NavButton_Icon {
     position: absolute;
-    z-index: 300;
-    top: 5vh;
-    left: 9vw;
-    padding-bottom: 2vh; 
+    z-index: 400;
+    top: 3vh;
+    left: 5vw; 
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 100%;
+    transition: background-color 0.5s ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.7);
 }
+
 
 .NavButton_Icon span {
     height: 5px;
@@ -26,22 +22,22 @@
     transform: none;
 }
 
-.NavButton_Checkbox:checked ~ .MainNavigation_MenuPane{
-    left: -5vw;
-    transform: translateX(-5vw); 
+.NavButton_Icon.active {
+    background-color: transparent;
+    box-shadow: none;
 }
 
-.NavButton_OpenMenu:checked ~ .NavButton_Icon span:last-child,
-.NavButton_OpenMenu:checked ~ .NavButton_Icon span:first-child {
-    opacity: 0;
-  }
-
-.NavButton_OpenMenu:checked ~ .NavButton_Icon span:nth-of-type(2) {
+.NavButton_Icon.active span:nth-of-type(2) {
     transform: translate(0%, 175%) rotate(-45deg);
-    background-color: white;
+    background-color:white;
   }
   
-  .NavButton_OpenMenu:checked ~ .NavButton_Icon span:nth-of-type(3) {
+.NavButton_Icon.active span:nth-of-type(3) {
     transform: rotate(45deg);
-    background-color: white;
+    background-color:white;
+}
+
+  .NavButton_Icon.active span:last-child,
+  .NavButton_Icon.active span:first-child{
+   opacity: 0;
   }

@@ -1,6 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { uuid } from 'uuidv4';
+import classnames from 'classnames';
+import cloneDeep from 'lodash.clonedeep';
 
 //COMPONENTS
 import NavList from './NavList';
@@ -8,6 +10,7 @@ import NavButton from './NavButton';
 import Backdrop from '../Backdrop/Backdrop';
 //CSS
 import styles from './MainNavigation.module.css';
+import NavItem from './NavItem';
 
 const MainNavigation = (props) => {
     const [NavItems, setNavItems] = useState([
@@ -16,24 +19,28 @@ const MainNavigation = (props) => {
             id: uuid(),
             auth: false,
             link: '/auth/signup',
+            active: false,
         },
         {
             name: 'Profile',
             id: uuid(),
             auth: false,
             link: '/profile/:cid',
+            active: false,
         },
         {
             name: 'My Posts',
             id: uuid(),
             auth: false,
             link: '/myPosts',
+            active: false,
         },
         {
             name: 'Fellows',
             id: uuid(),
             auth: false,
             link: '/myFellows',
+            active: false,
 
         },
         {
@@ -41,41 +48,31 @@ const MainNavigation = (props) => {
             id: uuid(),
             auth: false,
             link: '/myFellows',
+            active: false,
 
         },
     ]);
+    const [showNavigation, setShowNavigation] = useState(false);
+    let classNames = classnames(styles.MainNavigation_MenuPane, {[styles.active]: showNavigation})
 
-    const [showNavigation, setShowNavigation] = useState(false)
 
-    const NavButtonClickHandler = () => {
+    //FUNCTIONS
+
+    const showNavigationHandler = useCallback(() => {
         setShowNavigation(prevState => !prevState)
-    }
+    },[])
 
 
-
-
-    let NavigationPanel = (
-        <div className={styles.MainNavigation_MenuPane}>
-            <nav className={styles.MainNavigation}>
-                <NavList NavItems={NavItems} />
-            </nav>
-        </div>
-    );
-
-    if(showNavigation) {
-        NavigationPanel = (
-            <div className={`${styles.MainNavigation_MenuPane} ${styles.MainNavigation_MenuPane_TRUE}`}>
-                <nav className={styles.MainNavigation}>
-                    <NavList NavItems={NavItems} />
-                </nav>
-            </div>
-        )
-    }
+    //RENDER
     return (
         <div className={styles.MainNavigation_Container}>
-            <NavButton  clickHandler={NavButtonClickHandler}/>
-            {NavigationPanel}
-            <Backdrop show={showNavigation} clicked={NavButtonClickHandler}/>
+            <NavButton clickHandler={showNavigationHandler} menuOpen={showNavigation} />
+            <div className={classNames}>
+                <nav className={styles.MainNavigation}>
+                    <NavList NavItems={NavItems}  clicked={showNavigationHandler} />
+                </nav>
+            </div>
+            <Backdrop show={showNavigation} clicked={showNavigationHandler} />
         </div>
     );
 }

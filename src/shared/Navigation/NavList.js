@@ -13,6 +13,8 @@ const NavList = (props) => { //Used to show the NavItems
             key={item.id}
             auth={item.auth}
             link={item.link}
+            clicked={props.clicked}
+            activeLinkHandler={props.activeLinkHandler}
         />
     })
     return (
