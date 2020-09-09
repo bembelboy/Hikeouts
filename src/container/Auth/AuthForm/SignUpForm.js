@@ -4,7 +4,6 @@ import styles from './AuthForm.module.css';
 
 
 import AuthSubmitButton from './AuthSubmitButton';
-import AuthPage from '../../../pages/AuthPage';
 
 const SignUpForm = (props) => {
     return ( 
@@ -20,6 +19,12 @@ const SignUpForm = (props) => {
                 >Password:
                 </label>
                 <input id='password' type='password' placeholder='password' className={styles.form_Input} />
+            </div>
+            <div className={styles.form_Box}>
+                <label htmlFor='Username' className={styles.form_Label}
+                >Password:
+                </label>
+                <input id='Username' type='text' placeholder='Username' className={styles.form_Input} />
                 <AuthSubmitButton selected={props.selected} buttonLabel={props.buttonLabel}/>
             </div>
         </form>

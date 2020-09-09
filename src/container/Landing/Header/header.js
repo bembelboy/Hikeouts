@@ -16,8 +16,8 @@ const Header = (props) => {
                 <div className={styles.headerBox} >
                     <h1 className={styles.headerBox_H1}>Spott<span className={styles.headerBox_Span}>R</span> s</h1>
                     <h2 className={styles.headerBox_H2}>Discover everything around you!</h2>
-                    <AuthLink
-                        link='/auth/signup'
+                    <AuthLink openModal={props.openModal} closeModal={props.closeModal}
+                        loginButtonShow={props.loginButtonShow} modalShow={props.modalShow}
                         name='Go to Login'
                     />
                 </div>

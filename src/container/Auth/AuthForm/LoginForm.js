@@ -1,8 +1,6 @@
 import React from 'react';
 
 import styles from './AuthForm.module.css';
-import styles2 from './LoginForm.module.css';
-import styles3 from '../../../shared/UI/Buttons/AuthButton.module.css';
 
 import AuthSubmitButton from './AuthSubmitButton';
 

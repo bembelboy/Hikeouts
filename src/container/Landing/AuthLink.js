@@ -1,15 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
+import Modal from '../../shared/UI/Modal/Modal';
+import AuthMain from '../Auth/AuthMain';
+
+//CSS
 import styles from './AuthLink.module.css';
 
 const AuthLink = (props) => {
+
     return (
-            <Link className={`${styles.AuthLinkBox} ${styles.AuthLinkBox_Link}`} 
-            to={props.link} onClick={props.clicked}
-            >
-                {props.name}
-            </Link>
+        <>
+            {props.loginButtonShow ?
+                <Link className={`${styles.AuthLinkBox} ${styles.AuthLinkBox_Link}`} to='/home/login'
+                    onClick={props.openModal}
+                >
+                    {props.name}
+                </Link>
+                :
+                null
+            }
+
+            <Modal modalShow={props.modalShow} closeModal={props.closeModal}>
+                <AuthMain  closeModal={props.closeModal} />
+            </Modal>
+        </>
 
     );
 }

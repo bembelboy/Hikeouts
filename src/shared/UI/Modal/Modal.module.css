@@ -1,6 +1,6 @@
 .Modal_Container{
-    z-index: 6;
     position: relative;
+    z-index: 301;
 }
 
 .Modal_ClosedButton {
@@ -13,3 +13,23 @@
     width: auto;
     cursor: pointer;
 }
+
+/* TRANSITIONSTATES */
+.Modal_enter {
+    opacity: 0;
+  }
+
+  .Modal_enterActive {
+    opacity: 1;
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  .Modal_exit {
+    opacity: 1;
+  }
+
+  .Modal_exitActive {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+  }

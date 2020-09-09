@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-
+import React from 'react';
+import { CSSTransition } from 'react-transition-group';
+//CSS
 import styles from './Modal.module.css';
-
+//ICONS
 import { RiCloseLine } from 'react-icons/ri';
-
-import BackDrop from '../../Backdrop/Backdrop';
+//COMPONENTS
 
 const Modal = (props) => {
-    const [show, setShow] = useState(true);
 
-    const closeHandler = () => {
-        setShow(false);
-    }
 
-    let Modal = (
-        <>
+    return (
+        <CSSTransition
+            in={props.modalShow}
+            timeout={300}
+            unmountOnExit
+            onExited={props.closeModal}
+            classNames={{
+                appear: `${styles.Modal_enter}`,
+                enter: `${styles.Modal_enter}`,
+                enterActive: `${styles.Modal_enterActive}`,
+                exit: `${styles.Modal_exit}`,
+                exitActive: `${styles.Modal_exitActive}`,
+            }}
+        >
             <div className={styles.Modal_Container}>
-            <RiCloseLine onClick={closeHandler} className={styles.Modal_ClosedButton}/>
+                <RiCloseLine onClick={props.closeModal} className={styles.Modal_ClosedButton} />
                 {props.children}
             </div>
-            <BackDrop show={show} clicked={closeHandler} />
-        </>
+        </CSSTransition>
     )
-
-    if (show === false) {
-        Modal = null;
-    }
-    return (
-        Modal
-    );
 }
 
 export default Modal;

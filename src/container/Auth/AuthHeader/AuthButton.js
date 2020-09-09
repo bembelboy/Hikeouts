@@ -5,27 +5,25 @@ import styles from './AuthButton.module.css';
 
 const AuthButton = (props) => {
 
-    let ListItem = <li className={styles.ListItem} onClick={props.clicked}>
-        <Link className={styles.ListItem_Link} replace
+    let AuthButton = 
+        <Link className={styles.AuthButton_Link} replace onClick={props.clicked}
         to={props.link}
         >
             {props.name}
         </Link>
-    </li>
 
     if (props.selected) {
-        ListItem = <li className={styles.ListItem_Active} onClick={props.clicked}>
-            <Link className={styles.ListItem_Active_Link} replace
+        AuthButton = 
+            <Link className={styles.AuthButton_Active_Link} replace onClick={props.clicked}
             to={props.link}
              >
                 {props.name}
             </Link>
-        </li>
     }
 
 
     return (
-        ListItem
+        AuthButton
     );
 }
 

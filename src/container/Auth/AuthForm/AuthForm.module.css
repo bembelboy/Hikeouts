@@ -1,4 +1,5 @@
 .formContainer {
+    opacity: 1;
 }
 
 .form_Box {
@@ -7,14 +8,15 @@
     margin: 2rem;
     height: auto;
     position: relative;
+    opacity: 1;
 }
 
 .form_Label {
     position: absolute;
-    color: white;
+    color:white;
     display: inline;
     top: 0.75rem;
-    left: 4rem;
+    left: 2rem;
 }
 
 .form_Input {

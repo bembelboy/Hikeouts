@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import AuthHeader from '../container/Auth/AuthHeader/AuthHeader';
-import SignupForm from '../container/Auth/AuthForm/SignUpForm';
-import LoginForm from '../container/Auth/AuthForm/LoginForm';
-import Modal from '../shared/UI/Modal/Modal';
-
-import styles from './AuthPage.module.css';
+import AuthHeader from './AuthHeader/AuthHeader';
+import SignupForm from './AuthForm/SignUpForm';
+import LoginForm from './AuthForm/LoginForm';
+//CSS
+import styles from './AuthMain.module.css';
+//ICONS
+import { RiCloseLine } from 'react-icons/ri';
 
 
 
@@ -32,35 +33,34 @@ const AuthPage = (props) => {
     const switchAuthHandler = useCallback(() => {
         let authObject = {};
         if (switchAuth.signup) {
-            authObject = {...authObject,
+            authObject = {...switchAuth,
                 signup: false,
                 login: true,
-                link: '/auth/signup',
+                link: '/home/signup',
                 buttonLabel: 'Welcome back'
             }
         } else {
             authObject = {
-                ...authObject,
+                ...switchAuth,
                 signup: true,
                 login: false,
-                link: '/auth/login',
+                link: '/home/login',
                 buttonLabel: 'Be part of the crew'
 
             }
         }
         setSwitchAuth(authObject);
-    })
+    },[switchAuth])
 
     return (
-        <Modal>
-            <div className={styles.AuthFormContainer}>
-                <AuthHeader status={switchAuth} clicked={switchAuthHandler}/>
+            <div className={styles.AuthPage_AuthFormContainer}>
+             <RiCloseLine onClick={props.closeModal} className={styles.AuthMain_ClosedButton} />
+                <AuthHeader status={switchAuth} link={switchAuth.link} clicked={switchAuthHandler}/>
                 {switchAuth.signup ?
                     <SignupForm selected={switchAuth.signup} buttonLabel={switchAuth.buttonLabel}/> :
                     <LoginForm selected={switchAuth.login}  buttonLabel={switchAuth.buttonLabel}/>
                 }
             </div>
-        </Modal>
         
     );
 }

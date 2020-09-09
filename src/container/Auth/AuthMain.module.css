@@ -1,0 +1,21 @@
+.AuthPage_AuthFormContainer {
+    background:rgba(19,35,47,1);
+    padding: 40px;
+    width:65rem;
+    height: 65rem;
+    border-radius: 3px;
+    box-shadow:0 4px 10px 4px rgba(19,35,47,.3);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -32.5rem;
+    margin-left: -32.5rem;
+    opacity: 1;
+}
+
+.AuthMain_ClosedButton {
+    color: white;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}

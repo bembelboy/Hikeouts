@@ -1,4 +1,4 @@
-.ListItem_Active , .ListItem {
+.AuthButton_Active_Link , .AuthButton_Link {
     list-style-type: none;
     font-size: x-large;
     min-width: 20rem;
@@ -15,22 +15,15 @@
     background-color: rgb(33, 49, 61);
 }
 
-.ListItem_Active{
-    background-color: rgb(99, 199, 91);
-}
-
-.ListItem:hover , .ListItem_Active:hover {
-    background-color: rgb(99, 199, 139);
-}
-
-.ListItem_Link {
+.AuthButton_Link {
     transition: all .5s;
     text-decoration: none;
     color: lightslategray;
 }
 
-.ListItem_Active_Link {
+.AuthButton_Active_Link {
     transition: all .5s;
     text-decoration: none;
     color: white;
+    background-color: rgb(58, 39, 66);
 }

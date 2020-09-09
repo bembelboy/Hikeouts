@@ -10,9 +10,11 @@
 }
 
 .headerBox {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 301;
 }
 
 .headerBox_H1 {
