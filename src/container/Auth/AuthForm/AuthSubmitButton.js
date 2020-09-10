@@ -9,9 +9,10 @@ const AuthSubmitButton = (props) => {
 
     return (
         <CSSTransition
-            unmountOnExit
             in={props.selected}
-            timeout={300}
+            timeout={400}
+            unmountOnExit
+            appear
             classNames={{
                 appear: `${styles.AuthSubmitButton_appear}`,
                 enter: `${styles.AuthSubmitButton_enter}`,
@@ -20,7 +21,7 @@ const AuthSubmitButton = (props) => {
                 exitActive: `${styles.AuthSubmitButton_exitActive}`,
             }}
         >
-            <button className={styles.AuthSubmitButton}>{props.buttonLabel}</button>
+        <button className={styles.AuthSubmitButton}>{props.buttonLabel}</button>
         </CSSTransition>
     );
 }

@@ -11,6 +11,7 @@
   font-size: medium;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   min-width: 25rem;
+  transition: border 0.5s, opacity 0.5s;
 }
 
 .AuthSubmitButton:hover {
@@ -21,17 +22,15 @@
   opacity:0;
 }
 .AuthSubmitButton_enter{
-  opacity:0.5;
+  opacity:0.2;
+  transition: opacity 300ms;
 }
-
 .AuthSubmitButton_enterActive{
   opacity:1;
-  transition: opacity 300ms, transform 300ms;
 }
 
 .AuthSubmitButton_exit {
   opacity: 0.5;
-  transition: opacity 300ms, transform 300ms;
 }
 
 .AuthSubmitButton_exitActive {
