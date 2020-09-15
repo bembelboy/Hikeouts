@@ -6,8 +6,12 @@ import styles from './Spinner.module.css';
 
 
 const Spinner = (props) => {
-    return ( 
-        <div className={styles.loader}>Loading...</div>
+    let loader = <div className={styles.loader}>Loading...</div>
+    if(props.white) {
+        loader = <div className={styles.loader_white}>Loading...</div>
+    }
+    return (
+        loader
      );
 }
  

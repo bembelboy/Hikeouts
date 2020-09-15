@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { firebaseAuth } from './context/provider/AuthProvider';
+
+//STYLES
 import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
 
 //COMPONENETS
 import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
 import MainNavigation from './shared/Navigation/MainNavigation';
+import AuthMain from './container/Auth/AuthMain';
 
 function App() {
+
+  const { handleSignup } = useContext(firebaseAuth)
+  console.log(handleSignup)
+
   return (
-    <BrowserRouter>
-
-      <div className="App">
-        <MainNavigation />
-        <Route component={LandingPage} path='/home' />
+    <div className="App">
+      <MainNavigation />
+      <Switch>
+        <Route component={LandingPage} path='/' />
+        <Route component={AuthMain} path='/auth' />
         <Route component={ProfilePage} path='/profile/:id' exact />
-      </div>
+      </Switch>
 
-    </BrowserRouter>
+    </div>
   );
 }
 

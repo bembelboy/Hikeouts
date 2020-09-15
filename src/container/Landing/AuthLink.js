@@ -13,7 +13,7 @@ const AuthLink = (props) => {
     return (
         <>
             {props.loginButtonShow ?
-                <Link className={`${styles.AuthLinkBox} ${styles.AuthLinkBox_Link}`} to='/home/login'
+                <Link className={`${styles.AuthLinkBox} ${styles.AuthLinkBox_Link}`} to='/auth/signup'
                     onClick={props.openModal}
                 >
                     {props.name}

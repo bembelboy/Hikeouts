@@ -21,7 +21,9 @@ const AuthSubmitButton = (props) => {
                 exitActive: `${styles.AuthSubmitButton_exitActive}`,
             }}
         >
-        <button className={styles.AuthSubmitButton}>{props.buttonLabel}</button>
+        <button className={styles.AuthSubmitButton} >
+        {props.buttonLabel}
+        </button>
         </CSSTransition>
     );
 }

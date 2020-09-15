@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import firebase from '../firebase/firebaseIndex';
 import DUMMY_USER from '../DUMMY_DATA/DUMMY_USER';
 import { DUMMY_POST_ARRAY } from '../DUMMY_DATA/DUMMY_POSTS';
 
@@ -15,12 +16,13 @@ const ProfilePage = (props) => {
     const [user, setUser] = useState();
     const [PostListState, setPostListState] = useState(false);
     const [PostArray, setPostArray] = useState();
-
+    const [userName, setUserName] = useState()
 
     //LIFECYCLE
     useEffect(() => {
         setUser(DUMMY_USER)
         setPostArray(DUMMY_POST_ARRAY)
+        setUserName(firebase.getCurrentUsername())
     }, [])
 
 
@@ -46,7 +48,7 @@ const ProfilePage = (props) => {
             <>
                 <div>
                     <ProfileHeader id={user.id}
-                        name={user.name} location={user.from}
+                        name={userName} location={user.from}
                         profilePic={user.image} backgroundImage={user.backgroundImage}
                         showPostList={showPostList} showInfoList={showInfoList}
                     />
