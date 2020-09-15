@@ -15,10 +15,10 @@ const AuthHeader = (props) => {
         <>
             <AuthHeadline selected={props.status.signup} />
             <ul className={styles.AuthForm_List} >
-                <AuthButton name={'Sign Up'} selected={props.status.signup}
+                <AuthButton name='Sign Up' selected={props.status.signup}
                     clicked={props.clicked} link={props.link}
                 />
-                <AuthButton name={'Login'} selected={props.status.login}
+                <AuthButton name='Login' selected={props.status.login}
                     clicked={props.clicked} link={props.link}
                 />
             </ul>

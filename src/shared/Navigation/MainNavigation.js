@@ -2,7 +2,6 @@
 import React, { useState, useCallback } from 'react';
 import { uuid } from 'uuidv4';
 import classnames from 'classnames';
-import cloneDeep from 'lodash.clonedeep';
 
 //COMPONENTS
 import NavList from './NavList';
@@ -10,10 +9,9 @@ import NavButton from './NavButton';
 import Backdrop from '../Backdrop/Backdrop';
 //CSS
 import styles from './MainNavigation.module.css';
-import NavItem from './NavItem';
 
 const MainNavigation = (props) => {
-    const [NavItems, setNavItems] = useState([
+    const [NavItems ] = useState([
         {
             name: 'Login/SignUp',
             id: uuid(),

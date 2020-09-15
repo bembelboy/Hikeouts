@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import firebase from '../../firebase/firebaseIndex';
 
 import AuthHeader from './AuthHeader/AuthHeader';
 import SignupForm from './AuthForm/SignUpForm';

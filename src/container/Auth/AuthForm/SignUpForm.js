@@ -1,57 +1,47 @@
 import React, { useState, useContext, useEffect } from 'react';
-import firebase from '../../../firebase/firebaseIndex';
-
 
 import styles from './AuthForm.module.css';
 
-
+import Spinner from '../../../shared/UI/Spinner/Spinner';
 import AuthSubmitButton from './AuthSubmitButton';
 import { firebaseAuth } from '../../../context/provider/AuthProvider';
 import { withRouter } from 'react-router-dom';
 
 const SignUpForm = (props) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
+
     const [showSubmitButton, setShowSubmitButton] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(false)
 
+    const { handleSignup, inputs, setInputs, token, errors } = useContext(firebaseAuth)
 
-
-    const { handleSignup, inputs, setInputs } = useContext(firebaseAuth)
-
-    useEffect( () => {
-        if(props.history.location.pathname === '/auth/signup') {
+    useEffect(() => {
+        setShowSpinner(false);
+        if (props.history.location.pathname === '/auth/signup') {
             setTimeout(() => {
                 setShowSubmitButton(true)
             }, 500)
         } else {
             setShowSubmitButton(false)
         }
-    },[props.history.location.pathname])
+    }, [props.history.location.pathname])
 
     const onChangeHandler = (event) => {
-        switch (event.target.id) {
-            case 'email':
-                setEmail(event.target.value);
-                break;
-            case 'username':
-                setUsername(event.target.value);
-                break;
-            case 'password':
-                setPassword(event.target.value);
-                break;
-            default:
-                break;
-        }
+        const { name, value } = event.target;
+        setInputs(prev => ({ ...prev, [name]: value }))
     }
 
     const submitFormHandler = (event) => {
         event.preventDefault()
-        console.log('HANdler SUBMITTO')
+        handleSignup();
+        setShowSpinner(true)
+        if(errors.length) {
+            alert(errors)
+        }
     }
+    
 
     return (
-        <form className={styles.formContainer} onSubmit={() => console.log('SUBMITTED')}>
+        <form className={styles.formContainer} onSubmit={(event) => submitFormHandler(event)}>
             <div className={styles.form_Box}>
                 <label
                     htmlFor='email'
@@ -61,10 +51,10 @@ const SignUpForm = (props) => {
                 </label>
                 <input
                     id='email'
-                    type='email'
+                    name='email'
                     placeholder='email'
                     className={styles.form_Input}
-                    value={email}
+                    value={inputs.email}
                     onChange={(event) => onChangeHandler(event)}
                 />
             </div>
@@ -77,10 +67,10 @@ const SignUpForm = (props) => {
                 </label>
                 <input
                     id='username'
-                    type='text'
+                    name='username'
                     placeholder='Username'
                     className={styles.form_Input}
-                    value={username}
+                    value={inputs.username}
                     onChange={(event) => onChangeHandler(event)}
                 />
             </div>
@@ -92,17 +82,21 @@ const SignUpForm = (props) => {
                     Password:
                 </label>
                 <input
-                    id='password'
                     type='password'
+                    id='password'
+                    name='password'
                     placeholder='password'
                     className={styles.form_Input}
-                    value={password}
+                    value={inputs.password}
                     onChange={(event) => onChangeHandler(event)} />
-                <AuthSubmitButton
-                    selected={showSubmitButton}
-                    buttonLabel='Be part of the crew!'
-                    sendForm={(event) => submitFormHandler(event)}
-                />
+                {showSpinner ?
+                    <Spinner white />
+                    :
+                    <AuthSubmitButton
+                        selected={showSubmitButton}
+                        buttonLabel='Be part of the crew!'
+                    />
+                }
             </div>
         </form>
     );

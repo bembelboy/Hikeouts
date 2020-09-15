@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import firebase from '../firebase/firebaseIndex';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import DUMMY_USER from '../DUMMY_DATA/DUMMY_USER';
 import { DUMMY_POST_ARRAY } from '../DUMMY_DATA/DUMMY_POSTS';
+import { firebaseAuth } from '../context/provider/AuthProvider';
 
 import ProfileHeader from '../container/Profile/ProfileHeader';
 import InfoList from '../container/Profile/ProfileInfo/InfoList';
@@ -9,6 +9,7 @@ import PostList from '../container/Profile/ProfilePosts/PostList';
 import Spinner from '../shared/UI/Spinner/Spinner';
 
 import styles from './ProfilePage.module.css';
+import { Redirect } from 'react-router-dom';
 
 const ProfilePage = (props) => {
 
@@ -17,13 +18,17 @@ const ProfilePage = (props) => {
     const [PostListState, setPostListState] = useState(false);
     const [PostArray, setPostArray] = useState();
     const [userName, setUserName] = useState()
+    const [userTOKEN, setUserToken] = useState(null)
+    const { token } = useContext(firebaseAuth)
+
 
     //LIFECYCLE
     useEffect(() => {
         setUser(DUMMY_USER)
         setPostArray(DUMMY_POST_ARRAY)
-        setUserName(firebase.getCurrentUsername())
-    }, [])
+        setUserName('Bembelboy')
+        setUserToken(token)
+    },[token] )
 
 
     //FUNCTIONS
@@ -69,6 +74,10 @@ const ProfilePage = (props) => {
                 </div>
             </>
         )
+    }
+
+    if(!userTOKEN) {
+       UserPage =  <Redirect to='/' /> 
     }
 
     return (
