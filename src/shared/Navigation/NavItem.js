@@ -9,7 +9,6 @@ import styles from './NavItem.module.css';
 
 const NavItem = (props) => {
     return (
-        !props.auth &&
         <div className={styles.NavItem_Box} onClick={props.clicked}>
             <NavLink to={props.link} className={styles.NavItem_Link} activeClassName={styles.NavItem_LinkActive}>
                 <p>{props.name}</p>

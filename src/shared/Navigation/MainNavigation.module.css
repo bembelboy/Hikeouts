@@ -18,3 +18,21 @@
 .MainNavigation_MenuPane.active {
     transform: translateX(0); 
 }
+
+.MainNavigation_Logout {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    height: 9rem;
+    color: white;
+    font-weight: 600;
+    font-size: 3rem;
+    background-color: rgb(245, 88, 64);
+    border: 1px solid rgb(245, 88, 64);
+    transition: all 0.3s;
+}
+
+.MainNavigation_Logout:hover {
+    color: rgb(245, 88, 64);
+    background-color: white;
+}

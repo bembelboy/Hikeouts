@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { firebaseAuth } from '../../../context/provider/AuthProvider';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import styles from './AuthForm.module.css';
 
 import AuthSubmitButton from './AuthSubmitButton';
+import Spinner from '../../../shared/UI/Spinner/Spinner';
 
 const LoginForm = (props) => {
     const [showSubmitButton, setShowSubmitButton] = useState(false);
 
-    const { handleSignin, inputs, setInputs, errors } = useContext(firebaseAuth)
+    const { handleSignin, inputs, setInputs, errors, loading, token } = useContext(firebaseAuth)
 
     useEffect(() => {
         if (props.history.location.pathname === '/auth/login') {
@@ -29,39 +30,51 @@ const LoginForm = (props) => {
     const submitFormHandler = (event) => {
         event.preventDefault()
         handleSignin()
-        if(errors.length) {
+        if (errors.length) {
             alert(errors)
         }
     }
 
-    return (
+    let Login = (
         <form className={styles.formContainer} onSubmit={(event) => submitFormHandler(event)}>
-            <div className={styles.form_Box}>
-                <label htmlFor='email' className={styles.form_Label}>
-                    Email:
-                </label>
-                <input
-                    name='email'
-                    type='email'
-                    placeholder='email'
-                    className={styles.form_Input}
-                    value={inputs.email}
-                    onChange={(event) => onChangeHandler(event)} />
-            </div>
-            <div className={styles.form_Box}>
-                <label htmlFor='password' className={styles.form_Label}
-                >Password:
-                </label>
-                <input
-                    name='password'
-                    type='password'
-                    placeholder='password'
-                    className={styles.form_Input}
-                    value={inputs.password}
-                    onChange={(event) => onChangeHandler(event)} />
-                <AuthSubmitButton selected={showSubmitButton} buttonLabel='Welcome back!' />
-            </div>
-        </form>
+        <div className={styles.form_Box}>
+            <label htmlFor='email' className={styles.form_Label}>
+                Email:
+            </label>
+            <input
+                name='email'
+                type='email'
+                placeholder='email'
+                className={styles.form_Input}
+                value={inputs.email}
+                onChange={(event) => onChangeHandler(event)} />
+        </div>
+        <div className={styles.form_Box}>
+            <label htmlFor='password' className={styles.form_Label}
+            >Password:
+            </label>
+            <input
+                name='password'
+                type='password'
+                placeholder='password'
+                className={styles.form_Input}
+                value={inputs.password}
+                onChange={(event) => onChangeHandler(event)} />
+            {loading ? 
+            <Spinner white />
+                :
+            <AuthSubmitButton selected={showSubmitButton} buttonLabel='Welcome back!' />
+            }
+        </div>
+    </form>
+    )
+
+    if(token) {
+        Login = <Redirect to='/myFellows' />
+    }
+
+    return (
+        Login
     );
 }
 

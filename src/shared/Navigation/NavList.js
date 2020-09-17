@@ -7,11 +7,10 @@ import NavItem from './NavItem';
 
 const NavList = (props) => { //Used to show the NavItems
 
-    const NavigationList = props.NavItems.map(item => {
+    const NavigationList = props.navItems.map(item => {
         return <NavItem
             name={item.name}
             key={item.id}
-            auth={item.auth}
             link={item.link}
             clicked={props.clicked}
             activeLinkHandler={props.activeLinkHandler}
