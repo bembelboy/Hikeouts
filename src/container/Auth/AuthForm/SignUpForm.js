@@ -11,7 +11,7 @@ const SignUpForm = (props) => {
 
     const [showSubmitButton, setShowSubmitButton] = useState(false);
 
-    const { handleSignup, inputs, setInputs, token, errors, loading } = useContext(firebaseAuth)
+    const { handleSignup, inputs, setInputs, token, errors, loading, userId } = useContext(firebaseAuth)
 
     useEffect(() => {
         if (props.history.location.pathname === '/auth/signup') {
@@ -98,8 +98,8 @@ const SignUpForm = (props) => {
     </form>
     )
 
-    if (token) {
-       SignUp =  <Redirect to='/myFellows' /> 
+    if (token && userId) {
+       SignUp =  <Redirect to={'/profile/' + userId + '/edit'} /> 
     }
     
     return (

@@ -10,12 +10,15 @@ const ProfileHeader = (props) => {
 
     let HeaderProfilePage = useMemo(() => {
         return (
-            <div className={styles.ProfileHeader_ImageBox}>
-                <img src={props.backgroundImage} className={styles.ProfileHeader_BackgroundImage} alt='Background' />
-                <img src={props.profilePic} className={styles.ProfileHeader_Image} id='profilepic' alt='ProfilePicture' />
-                <label className={styles.ProfileHeader_Label} htmlFor='profilepic'>
-                    {props.name}, <span className={styles.ProfileHeader_LabelSpan}>{props.location.city} {props.location.quarter}</span>
-                </label>
+            <div className={styles.ProfileHeader_Container}>
+                <div className={styles.ProfileHeader_ImageBox}>
+                    <img src={props.backgroundImage} className={styles.ProfileHeader_BackgroundImage} alt='Background' />
+                    <img src={props.profilePic} className={styles.ProfileHeader_Image} id='profilepic' alt='ProfilePicture' />
+                    <label className={styles.ProfileHeader_Label} htmlFor='profilepic'>
+                        {props.name},
+                         <span className={styles.ProfileHeader_LabelSpan}>{props.location.city} {props.location.quarter}</span>
+                    </label>
+                </div>
                 <div className={styles.ProfileHeader_IconBox}>
                     <RiUserLine className={styles.ProfileHeader_Icon} />
                     <RiLandscapeLine className={styles.ProfileHeader_Icon} onClick={props.showPostList} />
@@ -29,4 +32,4 @@ const ProfileHeader = (props) => {
     );
 }
 
-export default ProfileHeader;
+export default React.memo(ProfileHeader);

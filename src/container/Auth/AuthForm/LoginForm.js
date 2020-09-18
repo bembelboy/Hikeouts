@@ -10,7 +10,7 @@ import Spinner from '../../../shared/UI/Spinner/Spinner';
 const LoginForm = (props) => {
     const [showSubmitButton, setShowSubmitButton] = useState(false);
 
-    const { handleSignin, inputs, setInputs, errors, loading, token } = useContext(firebaseAuth)
+    const { handleSignin, inputs, setInputs, errors, loading, token, userId } = useContext(firebaseAuth)
 
     useEffect(() => {
         if (props.history.location.pathname === '/auth/login') {
@@ -69,8 +69,8 @@ const LoginForm = (props) => {
     </form>
     )
 
-    if(token) {
-        Login = <Redirect to='/myFellows' />
+    if(userId) {
+        Login = <Redirect to={'/profile/' + userId} />
     }
 
     return (

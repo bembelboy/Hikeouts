@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { uuid } from 'uuidv4';
 import classnames from 'classnames';
 import { firebaseAuth } from '../../context/provider/AuthProvider';
@@ -12,6 +12,7 @@ import Backdrop from '../Backdrop/Backdrop';
 import styles from './MainNavigation.module.css';
 
 const MainNavigation = (props) => {
+
     const [navItems] = useState([
         {
             name: 'Login/SignUp',
@@ -27,7 +28,7 @@ const MainNavigation = (props) => {
         },
     ]);
 
-    const [navItems_Protected] = useState([
+    const [navItems_Protected, setNavItems_Protected] = useState([
         {
             name: 'Login/SignUp',
             id: uuid(),
@@ -37,7 +38,7 @@ const MainNavigation = (props) => {
         {
             name: 'Profile',
             id: uuid(),
-            link: '/profile/:cid',
+            link: '/profile/',
             active: false,
         },
         {
@@ -62,9 +63,20 @@ const MainNavigation = (props) => {
     ]);
 
     const [showNavigation, setShowNavigation] = useState(false);
-    const { token, handleSignout } = useContext(firebaseAuth);
-
+    const { token, handleSignout, userId } = useContext(firebaseAuth);
     let classNames = classnames(styles.MainNavigation_MenuPane, { [styles.active]: showNavigation })
+
+    useEffect(() => {
+        const newNav = navItems_Protected.map(obj => {
+            if(obj.name === 'Profile') // check if fieldName equals to cityId
+               return {
+                 ...obj,
+                 link: '/profile/' + userId,
+               }
+            return obj
+          });
+        setNavItems_Protected(newNav);
+    },[userId])
 
     //FUNCTIONS
 

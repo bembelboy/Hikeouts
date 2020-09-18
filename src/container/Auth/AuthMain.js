@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { firebaseAuth } from '../../context/provider/AuthProvider';
 
 import AuthHeader from './AuthHeader/AuthHeader';
 import SignupForm from './AuthForm/SignUpForm';
 import LoginForm from './AuthForm/LoginForm';
-import Spinner from '../../shared/UI/Spinner/Spinner';
 //CSS
 import styles from './AuthMain.module.css';
 //ICONS
 import { RiCloseLine } from 'react-icons/ri';
-import { Route, withRouter } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
 
 
 
@@ -22,6 +22,7 @@ const AuthPage = (props) => {
     });
 
     const [baseURL, setBaseURL] = useState() 
+    const { token, userId } = useContext(firebaseAuth)
 
 
     useEffect(() => {
@@ -54,14 +55,8 @@ const AuthPage = (props) => {
         setSwitchAuth(authObject);
     }, [switchAuth])
 
-    let AuthMain = (
-        <div>
-            <Spinner white />
-        </div>
-    );
 
-    if (true) {
-        AuthMain = (
+        let AuthMain = (
             <div className={styles.AuthPage_AuthFormContainer}>
                 <RiCloseLine onClick={props.closeModal} className={styles.AuthMain_ClosedButton} />
                 <AuthHeader status={switchAuth} link={switchAuth.link} clicked={switchAuthHandler} />
@@ -74,7 +69,10 @@ const AuthPage = (props) => {
                     component={LoginForm}
                 />
             </div>
-        )
+        );
+
+    if ( token ) {
+        AuthMain = <Redirect to={'/profile/' + userId} />
     }
 
     return (
