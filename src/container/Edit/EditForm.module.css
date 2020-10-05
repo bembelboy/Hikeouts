@@ -1,0 +1,76 @@
+
+.EditForm_Container {
+    position: fixed;
+    display: block;
+    height: 31vh;
+    width: 100%;
+    z-index: 30;
+    top: 0;
+    left:0;
+    background-color: white;
+}
+
+.EditForm_ImageBox {
+    position: relative;
+    width: 100%;
+    height: 25vh;
+    background-color: rgb(235,235,245);
+}
+
+.EditForm_Label {
+    position: absolute;
+    top: 3rem;
+    right: 15rem;
+    color: white;
+    background-color: rgb(58, 39, 66);
+    padding: 1rem 3rem;
+    font-size: 2.5rem;
+    text-align: center;
+    transition: all .4s ease-out;
+    border-radius: 3px;
+}
+
+.EditForm_LabelSpan {
+opacity: 0.9;
+}
+
+.EditForm_Descriptionbox {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(58, 39, 66);
+}
+
+.EditForm_ResetButton {
+    border: 1px transparent;
+    color: white;
+    font-size: 2rem;
+    background-color: rgb(58, 39, 66);
+    transition: all 0.3s;
+    margin: 3px 5rem;
+}
+
+.EditForm_ResetButton:hover {
+    border: 1px rgb(235,235,245);
+    background-color: rgb(235,235,245);
+    font-size: 2rem;
+    color: rgb(58, 39, 66);
+    border-radius: 3px;
+}
+
+.EditForm_SubmitButton {
+    border: 1rem solid rgb(99, 199, 91);
+    background-color: rgb(58, 39, 66);
+    font-size: 2rem;
+    color: rgb(99, 199, 91);
+    transition: all 0.3s;
+    border-radius: 3px;
+}
+
+.EditForm_SubmitButton:hover {
+    border: 1rem solid white;
+    color: white;
+}
+

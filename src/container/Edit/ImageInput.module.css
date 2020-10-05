@@ -1,0 +1,57 @@
+.ImageInput_BackgroundInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: inherit;
+    height: 25rem;
+    object-fit: cover;
+    text-align: center;
+    padding-bottom: 10rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.ImageInput_ProfileInput {
+    position: absolute;
+    padding-top: 10rem;
+    border-radius: 50%;
+    border: none;
+    width: 23vh;
+    height: 23vh;
+    text-align: center;
+    top: 3rem;
+    left: 15rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+    transition: all .4s ease-out;
+    background-color: rgb(215, 215, 245);
+    z-index: 50;
+}
+
+.ImageInput_BackgroundImage {
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 25vh;
+    object-fit: cover;
+    text-align: center;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.ImageInput_ProfileImage {
+    position: absolute;
+    border-radius: 50%;
+    border: none;
+    width: 23vh;
+    height: 23vh;
+    text-align: center;
+    top: 4.4rem;
+    left: 15rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    object-fit: cover;
+}

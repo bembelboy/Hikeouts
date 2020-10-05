@@ -1,0 +1,42 @@
+.EditFormList_Container{
+    overflow-x: auto;
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.EditForm_Box{
+    display: block;
+    width: 80%;
+    margin: 5rem auto;
+    max-height: 20rem;
+    padding: 2rem 4rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    background-color: rgb(58, 39, 66);
+    color: white;
+    border-radius: 5px;
+}
+
+
+.EditForm_Box:first-of-type {
+    margin-top: 7.5rem;
+
+}
+
+.EditForm_Box_Heading {
+    text-align: left;
+    width: 100%;
+    margin-bottom: 1rem;
+    height: 3rem;
+    font-size: 2rem;
+}
+
+.EditForm_Box_Input {
+    color: white;
+    text-align: center;
+    width: 100%;
+    min-height: 10rem;
+    background-color: rgb(58, 39, 66);
+    border: dotted white;
+    border-radius: 5px;
+    font-size: 2rem;
+}

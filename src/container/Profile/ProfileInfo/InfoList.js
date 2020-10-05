@@ -9,18 +9,22 @@ const InfoList = (props) => {
 
     let UserInfoList = <Spinner />
 
-    if(props.info) {
+    if(!props.loading) {
         UserInfoList = (
-            props.info.map(info => {
-                return <InfoField  key={info.paragraph} heading={info.heading} paragraph={info.paragraph} />
-            })
+            <ul className={styles.UserInfoList}>
+            <InfoField heading='About'  paragraph={props.info.About}
+            />
+            <InfoField  heading='Discoveries' paragraph={props.info.Discoveries} 
+            /> 
+            <InfoField  heading='Contact' paragraph={props.info.Contact} 
+            />
+            </ul>
         )
     }
 
+
     return ( 
-        <ul className={styles.UserInfoList}>
-          {UserInfoList}
-        </ul>
+        UserInfoList
      );
 }
  

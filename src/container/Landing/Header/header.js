@@ -9,7 +9,6 @@ import styles from './header.module.css';
 
 
 const Header = (props) => {
-
     return (
         <>
             <header className={styles.headerContainer}>
@@ -27,4 +26,4 @@ const Header = (props) => {
     );
 }
 
-export default Header;
+export default React.memo(Header);

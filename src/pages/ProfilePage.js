@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { DUMMY_POST_ARRAY } from '../DUMMY_DATA/DUMMY_POSTS';
 import { firebaseAuth } from '../context/provider/AuthProvider';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { database } from '../firebase/firebaseIndex';
-import { Link, Redirect, Route, useRouteMatch, withRouter } from 'react-router-dom';
-import cloneDeep from 'lodash.clonedeep';
+
 
 import ProfileHeader from '../container/Profile/ProfileHeader';
 import InfoList from '../container/Profile/ProfileInfo/InfoList';
@@ -12,42 +12,24 @@ import Spinner from '../shared/UI/Spinner/Spinner';
 
 import styles from './ProfilePage.module.css';
 import button from '../shared/UI/Buttons/EditButton.module.css';
-import EditPage from './EditPage';
+import { firebaseUser } from '../context/provider/UserInfoProvider';
+import cloneDeep from 'lodash.clonedeep';
 
-
-
-const userRef = database.collection('Nutzer');
+const userRef = database.collection("Nutzer");
 
 const ProfilePage = (props) => {
 
     //STATE
-    const [user, setUser] = useState();
     const [PostListState, setPostListState] = useState(false);
     const [PostArray, setPostArray] = useState();
-    const { userId } = useContext(firebaseAuth)
+    const { getUser, loading,  user } = useContext(firebaseUser)
 
 
     //LIFECYCLE
     useEffect(() => {
-        let usersObject
-        userRef.get()
-            .then((snapshot) => {
-                const data = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                return data
-            })
-            .then((data) => {
-                let userArray = data.filter(userObject => userId === userObject.id);
-                userArray.map(userdata => {
-                    return usersObject = cloneDeep(userdata)
-                })
-                setUser(usersObject);
-            })
-        // DUMMY_DATA
+        getUser()
         setPostArray(DUMMY_POST_ARRAY)
-    }, [userId])
+    }, [])
 
 
     //FUNCTIONS
@@ -78,9 +60,15 @@ const ProfilePage = (props) => {
                     showPostList={showPostList}
                     showInfoList={showInfoList}
                 />
-                UserPage = <InfoList info={user.infos} />
+                <InfoList info={user.info}  loading={loading}/>
                 <div className={styles.EditButton_Box}>
-                    <Link className={button.EditButton}  to={ '/profile/'+ user.id + '/edit'} >Edit</Link>
+                    <Link 
+                    className={button.EditButton}  
+                    to={{
+                         pathname: '/profile/'+ user.id + '/edit',
+                         state: {user: user}}} 
+                        >Edit
+                        </Link>
                 </div>
             </div>
         )
