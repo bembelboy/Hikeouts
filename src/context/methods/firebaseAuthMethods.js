@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-import firebaseConfig from './firebaseIndex';
+import firebaseConfig from '../../firebase/firebaseIndex';
 import firebase from 'firebase';
-import { database } from './firebaseIndex';
+import { database } from '../../firebase/firebaseIndex';
 
 
 export const authMethods = {

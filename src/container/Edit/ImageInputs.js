@@ -6,15 +6,18 @@ import styles from './ImageInput.module.css';
 
 
 const ImageInput = (props) => {
+
+
     const inputClasses = classNames({
         [styles.ImageInput_BackgroundInput]: props.ImageInput_Background,
         [styles.ImageInput_ProfileInput]: props.ImageInput_Profile,
     })
-
     const imageClasses = classNames({
         [styles.ImageInput_BackgroundImage]: props.ImageInput_Background,
         [styles.ImageInput_ProfileImage]: props.ImageInput_Profile
     })
+
+    
     const { getRootProps, getInputProps } = useDropzone({
         accept: 'image/*',
         onDrop: acceptedFiles => {

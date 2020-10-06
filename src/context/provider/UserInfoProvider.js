@@ -1,48 +1,50 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
-import { userMethods } from '../../firebase/firebaseUserMethods';
+import { userMethods } from '../methods/firebaseUserMethods';
 
 const UserProvider = (props) => {
 
     const [backgroundImage, setBackgroundImage] = useState([]);
+    const [backgroundImageURL, setBackgroundImageURL] = useState({})
     const [profileImage, setProfileImage] = useState([]);
+    const [profileImageURL, setProfileImageURL] = useState({});
+    const [imageType] = useState(['profile', 'background'])
     const [user, setUser] = useState(false)
     const [loading, setLoading] = useState(false)
     const [userInputs, setUserInputs] = useState({
         About: '',
         Discoveries: '',
         Contact: '',
+        city: '',
+        quarter: '',
     });
 
 
     const getUser = () => {
-        userMethods.getUser(setUser, setLoading)
-       // setTimeout(() => console.log(user), 3000)
+        userMethods.getUserData(setUser, setLoading)
+        userMethods.getImageURL(setBackgroundImageURL, setProfileImageURL ,imageType)
     }
 
 
-    const subscribeToUser = () => {
-        userMethods.subscribeUser(setUser)
+    const getUserData = () => {
+        userMethods.getUserData(setUser, setLoading)
     }
     const editUserInfo = useCallback(() => {
-        userMethods.editUser(userInputs, profileImage, backgroundImage, setLoading)
-    },[backgroundImage, profileImage, userInputs])
+        userMethods.editUser(userInputs, setLoading, user)
+        userMethods.uploadImage(profileImage,setProfileImageURL, imageType[0] )
+        userMethods.uploadImage(backgroundImage,setBackgroundImageURL, imageType[1] )
+    },[backgroundImage, imageType, profileImage, userInputs])
 
     return (
         <firebaseUser.Provider
             value={{
-                setUserInputs,
-                userInputs,
+                userInputs, setUserInputs,
                 editUserInfo,
-                backgroundImage,
-                setBackgroundImage,
-                profileImage,
-                setProfileImage,
+                backgroundImageURL, backgroundImage, setBackgroundImage,
+                profileImageURL, profileImage,setProfileImage,
                 loading,
-                getUser,
-                user,
-                setUser,
-                subscribeToUser
+                user, setUser, getUser,
+                getUserData
             }}>
             {props.children}
 

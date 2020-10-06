@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { authMethods } from '../../firebase/firebaseAuthMethods';
+import { authMethods } from '../methods/firebaseAuthMethods';
 
 const AuthProvider = (props) => {
 

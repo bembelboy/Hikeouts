@@ -28,10 +28,20 @@
     text-align: center;
     transition: all .4s ease-out;
     border-radius: 3px;
+    display: flex;
+align-items: center;
+justify-content: center;
 }
 
 .EditForm_LabelSpan {
 opacity: 0.9;
+}
+
+.EditForm_ImageBox_Input {
+    position: relative;
+    border: transparent;
+    height: 4rem;
+    margin: 1rem;
 }
 
 .EditForm_Descriptionbox {

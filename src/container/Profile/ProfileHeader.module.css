@@ -19,8 +19,8 @@
 
 
 .ProfileHeader_BackgroundImage {
-    width: fit-content;
-    height: 23vh;
+    width: 100%;
+    height: 25vh;
     object-fit: cover;
 }
 

@@ -40,7 +40,7 @@ const EditFormList = (props) => {
                 </h3>
                 <input
                     className={styles.EditForm_Box_Input}
-                    placeholder='How should people reach you their next adventure with you ? '
+                    placeholder='How should people reach you to plan their next adventure with you ? '
                     id='Contact'
                     value={userInputs.Contact}
                     onChange={event => props.editFormListHandler(event)}

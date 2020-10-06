@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 
 import EditFormList from './EditFormList';
 import ImageInput from './ImageInputs';
-import Spinner from '../../shared/UI/Spinner';
+import Spinner from '../../shared/UI/Spinner/Spinner';
 
 import styles from './EditForm.module.css';
 import { firebaseUser } from '../../context/provider/UserInfoProvider';
 
 
 const EditForm = (props) => {
-    const { loading } = useContext(firebaseUser)
+    const { loading, user, userInputs } = useContext(firebaseUser)
     return (
         <form className={styles.EditForm_Container} onSubmit={(event) => props.submitHandler(event)}>
             <div className={styles.EditForm_ImageBox}>
@@ -26,8 +26,21 @@ const EditForm = (props) => {
                     ImageInput_Background
                 />
                 <label className={styles.EditForm_Label} htmlFor='profilepic'>
-                    Name goes here
-                         <span className={styles.EditForm_LabelSpan}></span>
+                    {user.name},
+                    <span className={styles.EditForm_LabelSpan}>
+                        <input  type='text' id= 'city'
+                         className={styles.EditForm_ImageBox_Input}  
+                         onChange={(event) => props.editFormListHandler(event)}
+                         value={userInputs.city}
+                         placeholder='Enter here where'
+                         /> 
+                        <input  type='text' id= 'quarter'
+                         className={styles.EditForm_ImageBox_Input} 
+                         onChange={(event) => props.editFormListHandler(event)}
+                         value={userInputs.quarter}
+                         placeholder='you live'
+                         />
+                    </span>
                 </label>
             </div>
             <div className={styles.EditForm_Descriptionbox}>
