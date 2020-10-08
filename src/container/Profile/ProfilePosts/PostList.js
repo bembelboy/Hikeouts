@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import styles from './PostList.module.css';
 
 import Post from '../../../shared/Post/PostMain';
+import { firebasePost } from '../../../context/provider/PostProvider';
+import { firebaseUser } from '../../../context/provider/UserInfoProvider';
 
 
 const PostList = (props) => {
-    let PostListArray = props.PostArray.map( post => {
-        return <Post 
-        userImage={post.userInfo.userImage} username={post.userInfo.username} userId={post.userInfo.userId}
-        postImage={post.postInfo.postImage} headline={post.postInfo.headline}
-         paragraph={post.postInfo.paragraph} timeMark={post.postInfo.timeMark}
-        location={post.postInfo.location}
+    const { userPosts } = useContext(firebasePost)
+    const { user, profileImageURL } = useContext(firebaseUser)
+
+    let PostListArray = userPosts.map(post => {
+        return <Post key={post.postId}
+            userImage={profileImageURL.imgUrl} username={user.name} userId={user.id}
+            postImage={post.imgUrl}
+            headline={post.text.title} paragraph={post.text.description}
+              timeMark={post.timeMark.seconds}
+            // location='Not there yet'
         />
     })
-    return ( 
+    return (
         <ul className={styles.PostList} >
             {PostListArray}
         </ul>
-     );
+    );
 }
- 
+
 export default PostList;

@@ -11,6 +11,7 @@ import MainNavigation from './shared/Navigation/MainNavigation';
 import AuthMain from './container/Auth/AuthMain';
 import Home from './DUMMY_DATA/home';
 import EditPage from './pages/EditPage';
+import PostPage from './pages/PostPage';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <MainNavigation />
       <Switch>
         <Route path='/myFellows' component={Home} />
+        <Route path='/createPost' component={PostPage} />  
         <Route component={ProfilePage} path='/profile/:id' exact />
         <Route component={EditPage}  path={'/profile/:id/edit'} exact /> 
         <Route component={LandingPage} path='/' />

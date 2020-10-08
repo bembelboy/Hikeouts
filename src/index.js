@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import AuthProvider from './context/provider/AuthProvider';
 import UserInfoProvider from './context/provider/UserInfoProvider';
+import PostProvider from './context/provider/PostProvider'
 import { BrowserRouter } from 'react-router-dom';
 
 
@@ -14,7 +15,9 @@ ReactDOM.render(
     <BrowserRouter>
       <AuthProvider>
         <UserInfoProvider>
-          <App />
+          <PostProvider>
+            <App />
+          </PostProvider>
         </UserInfoProvider>
       </AuthProvider>
     </BrowserRouter>,

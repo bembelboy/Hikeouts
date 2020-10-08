@@ -44,7 +44,7 @@ const MainNavigation = (props) => {
         {
             name: 'My Posts',
             id: uuid(),
-            link: '/myPosts',
+            link: '/createPost',
             active: false,
         },
         {

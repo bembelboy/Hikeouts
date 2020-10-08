@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { DUMMY_POST_ARRAY } from '../DUMMY_DATA/DUMMY_POSTS';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 
 
@@ -11,19 +10,20 @@ import Spinner from '../shared/UI/Spinner/Spinner';
 import styles from './ProfilePage.module.css';
 import button from '../shared/UI/Buttons/EditButton.module.css';
 import { firebaseUser } from '../context/provider/UserInfoProvider';
+import { firebasePost } from '../context/provider/PostProvider';
 
 const ProfilePage = (props) => {
 
     //STATE
     const [PostListState, setPostListState] = useState(false);
-    const [PostArray, setPostArray] = useState();
-    const { getUser, loading,  user, profileImageURL, backgroundImageURL } = useContext(firebaseUser)
+    const { getUser, loading,  user } = useContext(firebaseUser)
+    const { getUserPostHandler } = useContext(firebasePost)
 
 
     //LIFECYCLE
     useEffect(() => {
         getUser()
-        setPostArray(DUMMY_POST_ARRAY)
+        getUserPostHandler()
     }, [])
 
 
@@ -50,8 +50,8 @@ const ProfilePage = (props) => {
                     id={user.id}
                     name={user.name}
                     location={user.from}
-                    profilePic={profileImageURL.imgUrl}
-                    backgroundImage={backgroundImageURL.imgUrl}
+                    profilePic={user.backgroundImageURL}
+                    backgroundImage={user.profileImageURL}
                     showPostList={showPostList}
                     showInfoList={showInfoList}
                 />
@@ -74,12 +74,12 @@ const ProfilePage = (props) => {
                     id={user.id}
                     name={user.name}
                     location={user.from}
-                    profilePic={profileImageURL.imgUrl}
-                    backgroundImage={backgroundImageURL.imgUrl}
+                    profilePic={user.profileImageURL}
+                    backgroundImage={user.backgroundImageURL}
                     showPostList={showPostList}
                     showInfoList={showInfoList}
                 />
-                <PostList PostArray={PostArray} />
+                <PostList />     
             </div>
         )
     }
@@ -89,7 +89,9 @@ const ProfilePage = (props) => {
     }
 
     return (
-        UserPage
+        <>
+            {UserPage}
+        </>
     );
 }
 

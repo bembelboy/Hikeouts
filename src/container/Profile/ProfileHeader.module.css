@@ -27,6 +27,7 @@
 .ProfileHeader_Image {
     position: absolute;
     border-radius: 50%;
+    object-fit: cover;
     width: 23vh;
     height: 23vh;
     top: 3rem;

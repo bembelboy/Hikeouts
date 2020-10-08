@@ -8,8 +8,9 @@
 
 .PostHeader_Image {
     border-radius: 50%;
-    height: 5rem;
-    width: auto;
+    object-fit: cover;
+    height: 7rem;
+    width: 7rem;
     background-color: grey;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 

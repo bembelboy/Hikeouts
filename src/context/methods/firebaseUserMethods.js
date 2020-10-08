@@ -56,13 +56,11 @@ export const userMethods = {
             .catch(error => console.log(error))
     },
 
-    uploadImage: (image, setImageURL, type) => {
+    uploadImage: (image, type) => {
 
         if (image.length === 0) {
             return
         } else {
-
-            console.log(image)
             const uploadTask = storage.ref(`/images/${localStorage.userId}+${type}`).put(image[0])
             //initiates the firebase side uploading 
             uploadTask.on('state_changed',
@@ -75,15 +73,31 @@ export const userMethods = {
                 }, () => {
                     // gets the functions from storage refences the image storage in firebase by the children
                     // gets the download url then sets the image from firebase as the value for the imgUrl key:
-                    storage.ref('images').child(localStorage.userId + type).getDownloadURL()
+                        storage.ref(`/images/${localStorage.userId}+${type}`).getDownloadURL()
                         .then(fireBaseUrl => {
-                            setImageURL(prevObject => ({ ...prevObject, imgUrl: fireBaseUrl }))
+                            if (type === 'profile') {
+                                usersRef.doc(localStorage.userId)
+                                .set(
+                                    {
+                                    profileImageURL: fireBaseUrl
+                                }
+                                ,{merge: true}
+                                )
+                            } else if (type === 'background') {
+                                usersRef.doc(localStorage.userId)
+                                .set(
+                                    {
+                                    backgroundImageURL: fireBaseUrl
+                                }
+                                ,{merge: true}
+                                )
+                            }
                         })
                 })
         }
     },
 
-    getImageURL: (setBackgroundImageURL, setProfileImageURL, type) => {
+    getImageURL: (setBackgroundImageURL, setProfileImageURL, type) => { //DEPECRATED
         // gets the functions from storage refences the image storage in firebase by the children
         // gets the download url then sets the image from firebase as the value for the imgUrl key:
         storage.ref(`/images/${localStorage.userId}+${type[0]}`).getDownloadURL()
