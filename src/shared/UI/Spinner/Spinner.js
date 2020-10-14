@@ -1,17 +1,35 @@
 import React from 'react';
+import classNames from 'classnames';
 
 
 import styles from './Spinner.module.css';
 
 
+import Backdrop from '../../Backdrop/Backdrop';
+
+
+
+
 
 const Spinner = (props) => {
-    let loader = <div className={styles.loader}>Loading...</div>
-    if(props.white) {
-        loader = <div className={styles.loader_white}>Loading...</div>
-    }
+
+    const spinnerClasses = classNames({
+        [styles.loader]: !props.white,
+        [styles.loader_white]: props.white,
+    })
+
+    const containerClasses = classNames({
+            [styles.loader_centered]: props.centered
+    })
+
+
     return (
-        loader
+        <div className={containerClasses} >
+           <div className={spinnerClasses}>Loading...</div>
+           <Backdrop show={props.withBackdrop} background /> 
+        </div>
+
+
      );
 }
  

@@ -1,6 +1,6 @@
 
 .NavButton_Icon {
-    position: absolute;
+    position: fixed;
     z-index: 1001;
     top: 3vh;
     left: 5vw; 

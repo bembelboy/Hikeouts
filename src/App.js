@@ -9,9 +9,9 @@ import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
 import MainNavigation from './shared/Navigation/MainNavigation';
 import AuthMain from './container/Auth/AuthMain';
-import Home from './DUMMY_DATA/home';
 import EditPage from './pages/EditPage';
 import PostPage from './pages/PostPage';
+import NewsFeedPage from './pages/NewsFeedPage';
 
 function App() {
 
@@ -21,8 +21,8 @@ function App() {
     <div className="App">
       <MainNavigation />
       <Switch>
-        <Route path='/myFellows' component={Home} />
-        <Route path='/createPost' component={PostPage} />  
+        <Route  component={NewsFeedPage} path='/myFellows' />
+        <Route component={PostPage} path='/createPost'/>  
         <Route component={ProfilePage} path='/profile/:id' exact />
         <Route component={EditPage}  path={'/profile/:id/edit'} exact /> 
         <Route component={LandingPage} path='/' />

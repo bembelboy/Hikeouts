@@ -9,7 +9,7 @@ import styles from './PostImage.module.css';
 const PostImage = (props) => {
 
     return (
-        <div className={styles.PostImage} src={props.postImage} >
+        <div className={styles.PostImage_Container} src={props.postImage} >
             <img className={styles.PostImage_Image} alt='Userpost' src={props.postImage} />
             <div className={styles.PostImage_Icons}>
                 <ul className={styles.PostImage_List} >

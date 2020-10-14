@@ -1,0 +1,35 @@
+.CreatePostHeader_Container {
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    font-weight: 800;
+}
+
+.CreatePostHeader_ProfileImage {
+    border-radius: 50%;
+    object-fit: cover;
+    height: 10rem;
+    width: 10rem;
+    background-color: grey;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    transition: all .3s;
+}
+
+.CreatePostHeader_ProfileImage:hover {
+    transform: translateY(0.2rem);  
+}
+
+.CreatePostHeader_Label {
+    margin: auto 3rem;
+    font-size: 2rem;
+}
+
+.CreatePostHeader_Button {
+    position: absolute;
+    right: 4rem;
+    top: 4rem;
+    margin: auto 0;
+    padding: 1rem 2rem;
+
+}

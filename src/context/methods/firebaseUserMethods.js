@@ -7,7 +7,10 @@ export const userMethods = {
 
     getUserData: (setUser, setLoading) => {
         setLoading(true)
-        usersRef.doc(localStorage.userId).get()
+        if(!localStorage.userId) {
+            return
+        } else {
+            usersRef.doc(localStorage.userId).get()
             .then(async (snapshot) => {
                 let userdata = await { ...snapshot.data() }
                 return userdata
@@ -16,6 +19,19 @@ export const userMethods = {
                 setUser(data)
                 setLoading(false)
             })
+        }
+    },
+
+    getAllUsers: (setAllUsers, setLoading) => {
+        setLoading(true)
+        usersRef.get()
+        .then((snapShot) => {
+            const allUserData = snapShot.docs.map(doc => doc.data())
+            setAllUsers(allUserData)
+        })
+        .then(() => {
+            setLoading(false)
+        })
     },
 
 

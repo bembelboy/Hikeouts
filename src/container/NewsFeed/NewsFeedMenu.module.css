@@ -1,0 +1,26 @@
+.NewsFeedMenu_Container {
+    display: flex;
+    position: fixed;
+    top:0;
+    background-color: rgb(58, 39, 66);
+    height: 13vh;
+    width: 100%;
+    z-index: 200;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.7);
+    justify-content: space-around;
+    align-items: center;
+}
+
+.NewsFeedMenu_ArrowButton {
+    color: white;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.7);
+    font-size: 4rem;
+    border-radius: 50%;
+    border: 2px solid white;
+    transition: all 0.3s;
+}
+
+.NewsFeedMenu_ArrowButton:hover {
+    transform: scale(1.2);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+}

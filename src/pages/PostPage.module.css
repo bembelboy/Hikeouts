@@ -1,0 +1,16 @@
+.PostPage_Container {
+}
+
+.PostPage_Heading {
+    margin: 7vh;
+    font-size: 6rem;
+    color: white;
+}
+
+.PostPage_PostBox {
+    background-color: white;
+    position: relative;
+    width: 50vw;
+    margin: 0 auto;
+    box-shadow: 0.3rem 0.2rem 10px  rgba(0, 0, 0, 0.5);
+}

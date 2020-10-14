@@ -4,10 +4,14 @@ import { userMethods } from '../methods/firebaseUserMethods';
 
 const UserProvider = (props) => {
 
+
+    const [user, setUser] = useState(false)
+    const [allUsers, setAllUsers] = useState([])
+
+    //EditStates
     const [backgroundImage, setBackgroundImage] = useState([]);
     const [profileImage, setProfileImage] = useState([]);
     const [imageType] = useState(['profile', 'background'])
-    const [user, setUser] = useState(false)
     const [loading, setLoading] = useState(false)
     const [userInputs, setUserInputs] = useState({
         About: '',
@@ -20,6 +24,10 @@ const UserProvider = (props) => {
 
     const getUser = () => {
         userMethods.getUserData(setUser, setLoading)
+    }
+
+    const getAllUsers = () => {
+        userMethods.getAllUsers(setAllUsers, setLoading)
     }
 
 
@@ -37,11 +45,12 @@ const UserProvider = (props) => {
             value={{
                 userInputs, setUserInputs,
                 editUserInfo,
-                 backgroundImage, setBackgroundImage,
-                 profileImage,setProfileImage,
+                backgroundImage, setBackgroundImage,
+                profileImage,setProfileImage,
                 loading,
                 user, setUser, getUser,
-                getUserData
+                getUserData,
+                getAllUsers,allUsers
             }}>
             {props.children}
         </firebaseUser.Provider>

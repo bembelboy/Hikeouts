@@ -1,9 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { uuid } from 'uuidv4';
-import PostInputs from '../container/AddPost/PostInputs';
+
 import { firebasePost } from '../context/provider/PostProvider';
 import { firebaseUser } from '../context/provider/UserInfoProvider';
+
+import PostInputs from '../container/AddPost/PostInputs';
 import Spinner from '../shared/UI/Spinner/Spinner';
+import CreatePostHeader from '../container/AddPost/CreatePostHeader';
+import Backdrop from '../shared/Backdrop/Backdrop'
+
+import styles from './PostPage.module.css';
 
 const PostPage = (props) => {
     const {
@@ -19,40 +25,56 @@ const PostPage = (props) => {
         let newPostId = uuid().toString()
         console.log(newPostId)
         setPostId(newPostId)
+        setPostInputs({
+            Title: '',
+            Description: '',
+        })
+        setPostImage([])
+
         getUser()
     }, [])
 
 
-    const postPageInputHandler = (event) => {
+    const postPageInputHandler = useCallback((event) => {
         event.preventDefault()
         const { id, value } = event.target;
         setPostInputs(prev => ({ ...prev, [id]: value }))
-    }
+    }, [setPostInputs])
 
     const submitPostHandler = (event) => {
         event.preventDefault()
-        pushPostHandler()
+        pushPostHandler(user.profileImageURL, user.name)
+    }
+
+    const resetImageHandler = () => {
+        setPostImage([])
     }
 
 
 
     let PostP = (
-        <Spinner />
+        <Spinner  withBackdrop white centered />
     )
 
     if (user) {
         PostP = (
-            <div>
-                <h1>This is the PostPage</h1>
-                <h2>{user.name}</h2>
-                <img src={user.profileImageUrl} alt='ProfileImage' />
-                <PostInputs
-                    postImage={postImage}
-                    setPostImage={setPostImage}
-                    postInputs={postInputs}
-                    inputHandler={postPageInputHandler}
-                    submitPostHandler={submitPostHandler}
-                />
+            <div className={styles.PostPage_Container}>
+                <h2 className={styles.PostPage_Heading}>Create yout post here</h2>
+                <div className={styles.PostPage_PostBox}>
+                    <CreatePostHeader 
+                    username={user.name} 
+                    profileImage={user.profileImageURL}
+                    resetImageHandler={resetImageHandler}
+                    />
+                    <PostInputs
+                        postImage={postImage}
+                        setPostImage={setPostImage}
+                        postInputs={postInputs}
+                        inputHandler={postPageInputHandler}
+                        submitPostHandler={submitPostHandler}
+                    />
+                </div>
+                <Backdrop  show background />
             </div>
         )
     }

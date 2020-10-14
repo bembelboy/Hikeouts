@@ -1,4 +1,5 @@
 
+import { get } from 'superagent';
 import firebaseConfig from '../../firebase/firebaseIndex';
 import { database, storage } from '../../firebase/firebaseIndex';
 
@@ -8,12 +9,16 @@ const PostRefStorage = storage.ref('/PostImages/')
 export const postMethods = {
 
 
-    pushPostData: (postInputs, postId, setLoading) => {
+    pushPostData: (postInputs, postId, profileImageURL, username, setLoading) => {
+        const timeMark = new Date()
         setLoading(true)
         PostRefFirestore.doc(postId)
             .set(
                 {
-                    timeMark: new Date(),
+                    name: username,
+                    profileImageURL: profileImageURL,
+                    timeMark: timeMark,
+                    timeMarkInMilliseconds: timeMark.getTime(),
                     postId: postId,
                     userId: localStorage.userId,
                     text:{
@@ -44,8 +49,7 @@ export const postMethods = {
                     //catches the errors
                     console.log(err)
                 }, () => {
-                    // gets the functions from storage refences the image storage in firebase by the children
-                    // gets the download url then sets the image from firebase as the value for the imgUrl key:
+                    // sets the ImageUrl in Firestore to the name of the document in storage so I can retrive it later
                     storage.ref('/PostImages/').child(postId).getDownloadURL()
                         .then(fireBaseUrl => {
                             PostRefFirestore.doc(postId)
@@ -60,20 +64,96 @@ export const postMethods = {
         }
     },
 
-    getPosts: (setAllPosts, setLoading) => {
+    getPosts: (setAllPosts, setLoading, setPostQuery) => {
 
-        PostRefFirestore.get()
+        PostRefFirestore.orderBy('timeMarkInMilliseconds').limit(3).get()
         .then((snapshot) => {
         setLoading(true)
           const data = snapshot.docs.map((doc) => ({
             ...doc.data()
           }));
+          const lastVisible = snapshot.docs[snapshot.docs.length-1];
+          setPostQuery(lastVisible)
+          console.log(data)
           return data
         })
         .then((data) => {
             setAllPosts(data)
             setLoading(false)
         })
+    },
+
+    getNextPage: (setAllPosts, allPosts, setLoading, setPostQuery, postQuery) => {
+        if(allPosts.length < 3) {
+
+            PostRefFirestore.orderBy('timeMarkInMilliseconds').limitToLast(3).get()
+            .then((snapshot) => {
+            setLoading(true)
+              const data = snapshot.docs.map((doc) => ({
+                ...doc.data()
+              }));
+              const lastVisible = snapshot.docs[snapshot.docs.length-1];
+              setPostQuery(lastVisible)
+              return data
+            })
+            .then((data) => {
+                setAllPosts(data)
+                setLoading(false)
+            })
+        } else {
+
+            return PostRefFirestore.orderBy('timeMarkInMilliseconds').startAfter(postQuery).limit(3).get()
+            .then((snapshot) => {
+                setLoading(true)
+                  const data = snapshot.docs.map((doc) => ({
+                    ...doc.data()
+                  }));
+                  const lastVisible = snapshot.docs[snapshot.docs.length-1];
+                  setPostQuery(lastVisible)
+                  return data
+                })
+                .then((data) => {
+                    setAllPosts(data)
+                    setLoading(false)
+                })
+        }
+    },
+
+    getPreviousPage: (setAllPosts, allPosts, setLoading, setPostQuery, postQuery) => {
+        if(allPosts.length < 3) {
+            return PostRefFirestore.orderBy('timeMark').limit(3).get()
+            .then((snapshot) => {
+                setLoading(true)
+                  const data = snapshot.docs.map((doc) => ({
+                    ...doc.data()
+                  }));
+                  const lastVisible = snapshot.docs[snapshot.docs.length-1];
+                  setPostQuery(lastVisible)
+                  return data
+                })
+                .then((data) => {
+                    setAllPosts(data)
+                    setLoading(false)
+                })
+
+        } else {
+            
+        return PostRefFirestore.orderBy('timeMark').endBefore(postQuery).limit(3).get()
+        .then((snapshot) => {
+            setLoading(true)
+              const data = snapshot.docs.map((doc) => ({
+                ...doc.data()
+              }));
+              const lastVisible = snapshot.docs[snapshot.docs.length-1];
+              setPostQuery(lastVisible)
+              return data
+            })
+            .then((data) => {
+                setAllPosts(data)
+                setLoading(false)
+            })
+        }
+
     },
 
     getUserPosts: (setUsersPost,setLoading) => {

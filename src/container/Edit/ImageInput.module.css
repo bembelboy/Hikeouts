@@ -28,6 +28,17 @@
     z-index: 50;
 }
 
+.ImageInput_PostInput {
+    color: white;
+    border: white 1px dotted;
+    width: 45vw;
+    height: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
 .ImageInput_BackgroundImage {
     justify-content: center;
     align-items: center;
@@ -54,4 +65,18 @@
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
     z-index: 100;
     object-fit: cover;
+}
+
+.ImageInput_PostImage {
+position: absolute;
+top: 0;
+left: 50;
+height: 100%;
+margin: 0 auto;
+}
+
+.ImageInput_PreviewContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -16,10 +16,10 @@ export const authMethods = {
         setToken(token)
         setUserId(token.h)
         setLoading(true)
-        return res
+        return token
       })
-      .then( async res => {
-        const userId = res.user.id;
+      .then( async token => {
+        const userId = token.h;
         await localStorage.setItem('userId', userId);
         database.collection('Nutzer').doc(userId).set({
           id: userId,

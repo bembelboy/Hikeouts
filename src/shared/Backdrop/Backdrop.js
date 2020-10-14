@@ -1,15 +1,18 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import styles from './Backdrop.module.css';
 
 const Backdrop = (props) => {
+
+    const backgroundClasses = classNames({
+        [styles.Backdrop]: props.show,
+        [styles.Backdrop_FALSE]: !props.show,
+        [styles.Backdrop_Background]: props.background
+    })
+
     return (
-        props.show ?
-            <div className={styles.Backdrop} onClick={props.clicked}>
-                <label htmlFor={props.labelId} className={styles.Backdrop_Label}></label>
-            </div>
-            :
-            <div className={styles.Backdrop_FALSE} >
+            <div className={backgroundClasses} onClick={props.clicked}>
                 <label htmlFor={props.labelId} className={styles.Backdrop_Label}></label>
             </div>
     );

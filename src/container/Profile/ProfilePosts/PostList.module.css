@@ -1,4 +1,45 @@
-.PostList {
+.PostList_List {
     margin-top: 37vh;
+}
+
+.PostList_NoPostContainer {
+    margin: 37vh auto 0 auto;
+}
+
+.PostList_Heading {
+    padding: 2rem;
+    position: relative;
+    top: 0;
+    margin: 0;
+    font-size: 3rem;
+    display: block;
+}
+
+.PostList_Link {
+    position: relative;
+    top: 7rem;
+    width: 20vw;
+    display: block;
+    margin-top: 5rem;
+    text-decoration: none;
+    font-size: 2rem;
+    background-color: rgb(54, 178, 255);
+    color: white;
+    margin: 0 auto;
+    padding: 3rem;
+    font-size: 2.5rem;
+    border-radius: 20rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s;
+    border: 2px solid rgb(54, 178, 255);
+}
+
+.PostList_Link:hover {
+    color: rgb(54, 178, 255);
+    background-color: white;
+}
+
+.PostList_Link:focus {
+    transform: translateY(2rem);
 }
   

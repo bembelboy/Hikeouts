@@ -1,0 +1,57 @@
+.PostInput_ImageInputBox {
+    position: relative;
+    background-color: black;
+    min-height: 20rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.PostInput_TextInputsBox {
+    height: 32vh;
+}
+
+.PostInput_TitleInput {
+    display: block;
+    width: 100%;
+    height: 5vh;
+    padding-left: 5rem;
+    transition: all 0.3s;
+    border: 1px white solid;
+    border-bottom: 1px solid lightgrey;
+}
+
+.PostInput_DescriptionInput {
+    display: block;
+    width: 100%;
+    height: 18vh;
+    text-align: center;
+    transition: all 0.3s;
+    border: 1px;
+}
+
+.PostInput_DescriptionInput:focus, .PostInput_DescriptionInput:active,
+ .PostInput_TitleInput:focus, .PostInput_TitleInput:focus  {
+    background-color: rgb(245, 245, 245);
+    border: 1px solid lightgrey;
+    outline: none;
+}
+
+.PostInput_SubmitButton {
+    background-color: rgb(54, 178, 255);
+    cursor: pointer;
+    color: white;
+    padding: 1rem 6rem;
+    font-size: 2rem;
+    border: 2px solid rgb(54, 178, 255);
+    transition: all 0.3s;
+    border-radius: 5px;
+    margin-top: 2vh;
+}
+
+.PostInput_SubmitButton:hover  {
+    background-color: white;
+    color: rgb(54, 178, 255);
+}

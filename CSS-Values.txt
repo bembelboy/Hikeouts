@@ -4,3 +4,4 @@
 
 //COLORS
     color: rgb(58, 39, 66); MAIN-Purple
+    color: rgb(54, 178, 255); LightBlueContrast

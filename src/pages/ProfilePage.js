@@ -50,8 +50,8 @@ const ProfilePage = (props) => {
                     id={user.id}
                     name={user.name}
                     location={user.from}
-                    profilePic={user.backgroundImageURL}
-                    backgroundImage={user.profileImageURL}
+                    profilePic={user.profileImageURL}
+                    backgroundImage={user.backgroundImageURL}
                     showPostList={showPostList}
                     showInfoList={showInfoList}
                 />
