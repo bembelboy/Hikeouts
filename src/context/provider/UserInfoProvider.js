@@ -21,24 +21,29 @@ const UserProvider = (props) => {
         quarter: '',
     });
 
-
-    const getUser = () => {
+    const getUser = useCallback( () => {
         userMethods.getUserData(setUser, setLoading)
-    }
+    },[])
 
     const getAllUsers = () => {
         userMethods.getAllUsers(setAllUsers, setLoading)
     }
 
 
+
     const getUserData = () => {
         userMethods.getUserData(setUser, setLoading)
     }
+
     const editUserInfo = useCallback(() => {
         userMethods.editUser(userInputs, setLoading, user)
         userMethods.uploadImage(profileImage, imageType[0] )
         userMethods.uploadImage(backgroundImage, imageType[1] )
     },[backgroundImage, imageType, profileImage, user, userInputs])
+
+    const editBookmarks = (postId ) => {
+         userMethods.editBookmarks(postId, user.bookmarks, setLoading, setUser)
+    }
 
     return (
         <firebaseUser.Provider
@@ -50,7 +55,8 @@ const UserProvider = (props) => {
                 loading,
                 user, setUser, getUser,
                 getUserData,
-                getAllUsers,allUsers
+                getAllUsers,allUsers,
+                editBookmarks
             }}>
             {props.children}
         </firebaseUser.Provider>

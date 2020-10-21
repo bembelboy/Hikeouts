@@ -1,5 +1,4 @@
 
-import { get } from 'superagent';
 import firebaseConfig from '../../firebase/firebaseIndex';
 import { database, storage } from '../../firebase/firebaseIndex';
 
@@ -21,10 +20,10 @@ export const postMethods = {
                     timeMarkInMilliseconds: timeMark.getTime(),
                     postId: postId,
                     userId: localStorage.userId,
-                    text:{
-                            description: postInputs.Description,
-                            title: postInputs.Title
-                        }
+                    text: {
+                        description: postInputs.Description,
+                        title: postInputs.Title
+                    }
                 }
                 , { merge: true })
             .then(() => {
@@ -44,7 +43,7 @@ export const postMethods = {
             uploadTask.on('state_changed',
                 (snapShot) => {
                     //takes a snap shot of the process as it is happening
-                   // console.log(snapShot)
+                    // console.log(snapShot)
                 }, (err) => {
                     //catches the errors
                     console.log(err)
@@ -53,125 +52,125 @@ export const postMethods = {
                     storage.ref('/PostImages/').child(postId).getDownloadURL()
                         .then(fireBaseUrl => {
                             PostRefFirestore.doc(postId)
-                            .set(
-                                {
-                                imgUrl: fireBaseUrl
-                            }
-                            ,{merge: true}
-                            )
+                                .set(
+                                    {
+                                        imgUrl: fireBaseUrl
+                                    }
+                                    , { merge: true }
+                                )
                         })
                 })
         }
     },
 
-    getPosts: (setAllPosts, setLoading, setPostQuery) => {
+    getPosts: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery) => {
 
         PostRefFirestore.orderBy('timeMarkInMilliseconds').limit(3).get()
-        .then((snapshot) => {
-        setLoading(true)
-          const data = snapshot.docs.map((doc) => ({
-            ...doc.data()
-          }));
-          const lastVisible = snapshot.docs[snapshot.docs.length-1];
-          setPostQuery(lastVisible)
-          console.log(data)
-          return data
-        })
-        .then((data) => {
-            setAllPosts(data)
-            setLoading(false)
-        })
-    },
-
-    getNextPage: (setAllPosts, allPosts, setLoading, setPostQuery, postQuery) => {
-        if(allPosts.length < 3) {
-
-            PostRefFirestore.orderBy('timeMarkInMilliseconds').limitToLast(3).get()
             .then((snapshot) => {
-            setLoading(true)
-              const data = snapshot.docs.map((doc) => ({
-                ...doc.data()
-              }));
-              const lastVisible = snapshot.docs[snapshot.docs.length-1];
-              setPostQuery(lastVisible)
-              return data
+                setLoading(true)
+                const data = snapshot.docs.map((doc) => ({
+                    ...doc.data()
+                }));
+                const lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+                setLastVisible(lastVisiblePost)
+                setFirstPostQueryId(lastVisiblePost.id)
+                return data
             })
             .then((data) => {
                 setAllPosts(data)
                 setLoading(false)
+                PostRefFirestore.orderBy('timeMarkInMilliseconds').limitToLast(3).get()
+                .then((snapshot) => {
+                    const lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                    setLastPostQuery(lastVisible.id)
+                })
             })
-        } else {
+    },
 
-            return PostRefFirestore.orderBy('timeMarkInMilliseconds').startAfter(postQuery).limit(3).get()
-            .then((snapshot) => {
-                setLoading(true)
-                  const data = snapshot.docs.map((doc) => ({
-                    ...doc.data()
-                  }));
-                  const lastVisible = snapshot.docs[snapshot.docs.length-1];
-                  setPostQuery(lastVisible)
-                  return data
+    getNextPage: (setAllPosts, setLoading, setLastVisble, setFirstVisible, lastVisible, firstVisible) => {
+
+            return PostRefFirestore.orderBy('timeMarkInMilliseconds').startAfter(lastVisible).limit(3).get()
+                .then((snapshot) => {
+                    setLoading(true)
+                    const data = snapshot.docs.map((doc) => ({
+                        ...doc.data()
+                    }));
+                    const firstVisiblePost = snapshot.docs[0]
+                    const lastVisiblePost = snapshot.docs[snapshot.docs.length  -1];
+                    setLastVisble(lastVisiblePost)
+                    setFirstVisible(firstVisiblePost)
+                    return data
                 })
                 .then((data) => {
                     setAllPosts(data)
                     setLoading(false)
                 })
-        }
     },
 
-    getPreviousPage: (setAllPosts, allPosts, setLoading, setPostQuery, postQuery) => {
-        if(allPosts.length < 3) {
-            return PostRefFirestore.orderBy('timeMark').limit(3).get()
+    getPreviousPage: (setAllPosts,  setLoading, setLastVisible, setFirstVisible, firstVisible ) => {
+
+        return PostRefFirestore.orderBy('timeMarkInMilliseconds').endBefore(firstVisible).limitToLast(3).get()
             .then((snapshot) => {
                 setLoading(true)
-                  const data = snapshot.docs.map((doc) => ({
+                const data = snapshot.docs.map((doc) => ({
                     ...doc.data()
-                  }));
-                  const lastVisible = snapshot.docs[snapshot.docs.length-1];
-                  setPostQuery(lastVisible)
-                  return data
-                })
-                .then((data) => {
-                    setAllPosts(data)
-                    setLoading(false)
-                })
-
-        } else {
-            
-        return PostRefFirestore.orderBy('timeMark').endBefore(postQuery).limit(3).get()
-        .then((snapshot) => {
-            setLoading(true)
-              const data = snapshot.docs.map((doc) => ({
-                ...doc.data()
-              }));
-              const lastVisible = snapshot.docs[snapshot.docs.length-1];
-              setPostQuery(lastVisible)
-              return data
+                }));
+                const firstVisiblePost = snapshot.docs[0]
+                const lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+                setFirstVisible(firstVisiblePost)
+                setLastVisible(lastVisiblePost)
+                return data 
             })
             .then((data) => {
                 setAllPosts(data)
                 setLoading(false)
             })
-        }
 
     },
 
-    getUserPosts: (setUsersPost,setLoading) => {
+    getUserPosts: (setUsersPost, setLoading) => {
 
         PostRefFirestore.get()
-        .then((snapshot) => {
-        setLoading(true)
-          const data = snapshot.docs.map((doc) => ({
-            ...doc.data()
-          }))
-          .filter(post => post.userId === localStorage.userId);
-          return data
-        })
-        .then((data) => {
-            setUsersPost(data)
-            setLoading(false)
-        })
+            .then((snapshot) => {
+                setLoading(true)
+                const data = snapshot.docs.map((doc) => ({
+                    ...doc.data()
+                }))
+                    .filter(post => post.userId === localStorage.userId );
+                return data
+            })
+            .then((data) => {
+                setUsersPost(data)
+                setLoading(false)
+            })
     },
 
-    
+    getUserFavoritePost: (setUserFavoritePost, bookmarks) => {
+        if(bookmarks.lentgh === 0 || bookmarks[0] === '') {//Note that this operation is not as expensive as it looks like due to firebase Pipelining
+            return
+        } else {
+            bookmarks.map(bookmark => {
+                return  PostRefFirestore.doc(bookmark).get()
+                 .then(data => {
+                     setUserFavoritePost(prev => [...prev, data.data()])
+                 })
+             })
+        }
+
+            // console.log('Connected')
+            // PostRefFirestore.where('postId', 'in', [`${bookmarks[0]}`]).get()
+            //     .then((snapshot) => {
+            //         const data = snapshot.docs.map((doc) => ({
+            //             ...doc.data()
+            //         }))
+            //         console.log(data)
+            //         return data
+            //     })
+            //     .then((data) => {
+            //         setUserFavoritePost(data)
+            //     })
+
+    },
+
+
 }

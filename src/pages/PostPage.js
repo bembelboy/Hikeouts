@@ -16,7 +16,7 @@ const PostPage = (props) => {
         postImage, setPostImage,
         postInputs, setPostInputs,
         setPostId,
-        pushPostHandler
+        pushPostHandler,
     } = useContext(firebasePost)
 
     const { getUser, user, } = useContext(firebaseUser)

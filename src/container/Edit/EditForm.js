@@ -38,7 +38,7 @@ const EditForm = (props) => {
                          className={styles.EditForm_ImageBox_Input} 
                          onChange={(event) => props.editFormListHandler(event)}
                          value={userInputs.quarter}
-                         placeholder='you live'
+                         placeholder='you live '
                          />
                     </span>
                 </label>

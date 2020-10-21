@@ -1,21 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './PostList.module.css';
+import styles from './FavoritePostList.module.css';
 
 import Post from '../../../shared/Post/PostMain';
 import { firebasePost } from '../../../context/provider/PostProvider';
 
 
 const PostList = (props) => {
-    const { userPosts } = useContext(firebasePost)
+    const { favoritePosts, getFavoritePosts, setFavoritePosts } = useContext(firebasePost)
+
+    useEffect(() => {
+        setFavoritePosts([])
+        getFavoritePosts(props.bookmarks)
+    },[])
 
     let PostListComponent = (
-        <ul className={styles.PostList_List} >
+        <ul className={styles.FavoritePostList_List} >
             {
-                userPosts.map(post => {
+                favoritePosts.map(post => {
                     return (
-                        <Post key={post.postId}
+                        <Post key={post.postId} postId={props.postId}
                             userImage={post.profileImageURL} username={post.name} userId={post.userId}
                             postImage={post.imgUrl}
                             headline={post.text.title} paragraph={post.text.description}
@@ -28,11 +33,11 @@ const PostList = (props) => {
         </ul>
     )
 
-    if (userPosts.length === 0) {
+    if (favoritePosts.length === 0 || favoritePosts[0] === '') {
         PostListComponent = (
-            <div className={styles.PostList_NoPostContainer} >
-                <h3 className={styles.PostList_Heading}>Seems like you didnt created a Post yet</h3>
-                <Link to='/createPost'  className={styles.PostList_Link}>Share your first Post here</Link>
+            <div className={styles.FavoritePostList_NoPostContainer} >
+                <h3 className={styles.FavoritePostList_Heading}>Seems like you didnt have any favorites yet</h3>
+                <Link to='/NewsFeed'  className={styles.FavoritePostList_Link}>Discover your first Spotts</Link>
             </div>
         )
     }

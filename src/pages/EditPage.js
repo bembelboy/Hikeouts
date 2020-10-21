@@ -49,11 +49,7 @@ const EditPage = (props) => {
         editUserInfo()
     }
 
-    let EditP = (
-        <div className={styles.EditPage_SpinnerBox} >
-            <Spinner />
-        </div>
-    )
+    let EditP = <Spinner  centered/>
 
     if (!loading) {
         EditP = (

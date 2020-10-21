@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import styles from './ProfileHeader.module.css';
 
-import { RiLandscapeLine, RiUserLine, RiInformationLine } from 'react-icons/ri'
+import { RiLandscapeLine, RiInformationLine, RiBookmarkLine } from 'react-icons/ri'
 
 
 
@@ -20,7 +20,7 @@ const ProfileHeader = (props) => {
                     </label>
                 </div>
                 <div className={styles.ProfileHeader_IconBox}>
-                    <RiUserLine className={styles.ProfileHeader_Icon} />
+                    <RiBookmarkLine className={styles.ProfileHeader_Icon}  onClick={props.showFavList} />
                     <RiLandscapeLine className={styles.ProfileHeader_Icon} onClick={props.showPostList} />
                     <RiInformationLine className={styles.ProfileHeader_Icon} onClick={props.showInfoList} />
                 </div>

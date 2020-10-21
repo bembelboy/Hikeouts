@@ -3,12 +3,18 @@
     z-index: 301;
 }
 
+.Modal_Container_centered{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .Modal_ClosedButton {
     position: fixed;
     top:0;
     right:0;
     color: white;
-    z-index: 6;
+    z-index: 302;
     height: 2rem;
     width: auto;
     cursor: pointer;
@@ -26,10 +32,11 @@
 
   .Modal_exit {
     opacity: 1;
+    transition: opacity 300ms, transform 300ms;
   }
 
   .Modal_exitActive {
     opacity: 0;
     transform: scale(0.9);
-    transition: opacity 300ms, transform 300ms;
+    transition: opacity 500ms, transform 300ms;
   }

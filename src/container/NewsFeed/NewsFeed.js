@@ -9,6 +9,9 @@ const NewsFeed = (props) => {
 
         let  Feed = props.allPosts.map(postObj => {
             return <Post
+                key={postObj.postId}
+                postId={postObj.postId}
+                userId={postObj.userId}
                 userImage={postObj.profileImageURL}
                 username={postObj.username}
                 postImage={postObj.imgUrl}
@@ -17,8 +20,6 @@ const NewsFeed = (props) => {
                 timeMark={postObj.timeMark.seconds}
             />
         })
-
-
 
 
     return ( 

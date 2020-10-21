@@ -1,5 +1,7 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
+import classNames from 'classnames';
+
 //CSS
 import styles from './Modal.module.css';
 //ICONS
@@ -7,6 +9,10 @@ import { RiCloseLine } from 'react-icons/ri';
 //COMPONENTS
 
 const Modal = (props) => {
+    const ModalContainerClasses = classNames({
+        [styles.Modal_Container]: true,
+        [styles.Modal_Container_centered]: props.centered,
+    })
 
 
     return (
@@ -23,7 +29,7 @@ const Modal = (props) => {
                 exitActive: `${styles.Modal_exitActive}`,
             }}
         >
-            <div className={styles.Modal_Container}>
+            <div className={ModalContainerClasses}>
                 <RiCloseLine onClick={props.closeModal} className={styles.Modal_ClosedButton} />
                 {props.children}
             </div>

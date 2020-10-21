@@ -1,44 +1,31 @@
 import React from 'react';
 
-//ICONS
-import { FcLikePlaceholder, FcLike } from 'react-icons/fc';
-import { RiUserAddLine, RiUserLine, RiShareLine } from 'react-icons/ri'
+import Modal from '../UI/Modal/Modal';
+import Backdrop from '../Backdrop/Backdrop';
+
 //CSS
 import styles from './PostImage.module.css';
+import IconList from './IconList';
+import Spinner from '../UI/Spinner/Spinner';
+
 
 const PostImage = (props) => {
 
     return (
         <div className={styles.PostImage_Container} src={props.postImage} >
-            <img className={styles.PostImage_Image} alt='Userpost' src={props.postImage} />
-            <div className={styles.PostImage_Icons}>
-                <ul className={styles.PostImage_List} >
-                    <li className={styles.PostImage_ListItem} onClick={props.likeHandler} >
-                        {props.like ?
-                            <FcLike className={styles.PostImage_Icon} />
-                            :
-                            <FcLikePlaceholder className={styles.PostImage_Icon} />}
-                        <span className={styles.PostImage_Span}>Like</span>
-                    </li>
-                    <li className={styles.PostImage_ListItem} onClick={props.userHandler}>
-                        {props.user ?
-                            <>
-                                <RiUserLine className={styles.PostImage_Icon} />
-                                <span className={styles.PostImage_Span}>Unfollow</span>
-                            </>
-                            :
-                            <>
-                                <RiUserAddLine className={styles.PostImage_Icon} />
-                                <span className={styles.PostImage_Span}>Follow</span>
-                            </>}
-
-                    </li>
-                    <li className={styles.PostImage_ListItem} >
-                        <RiShareLine className={styles.PostImage_Icon} />
-                        <span className={styles.PostImage_Span}>Share</span>
-                    </li>
-                </ul>
-            </div>
+            <img className={styles.PostImage_Image} alt='Userpost' src={props.postImage} onClick={props.openModal} />
+            <Modal modalShow={props.modalState} closeModal={props.closeModal} >
+                <div className={styles.PostImage_ModalImage_Container} onClick={props.closeModal} >
+                    <img className={styles.PostImage_ModalImage} alt='ModalImage' src={props.postImage} onClick={props.closeModal} />
+                </div>
+                <Backdrop clicked={props.closeModal} show={props.modalState} background />
+            </Modal>
+            <IconList 
+                like={props.like}
+                user={props.user}
+                bookmarked={props.bookmarked} favHandler={props.favHandler}
+                postId={props.postId}
+            />
         </div>
     );
 }

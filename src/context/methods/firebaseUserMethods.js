@@ -7,31 +7,28 @@ export const userMethods = {
 
     getUserData: (setUser, setLoading) => {
         setLoading(true)
-        if(!localStorage.userId) {
+        if (!localStorage.userId) {
             return
         } else {
             usersRef.doc(localStorage.userId).get()
-            .then(async (snapshot) => {
-                let userdata = await { ...snapshot.data() }
-                return userdata
-            })
-            .then((data) => {
-                setUser(data)
-                setLoading(false)
-            })
+                .then( (snapshot) => {
+                    let userdata = { ...snapshot.data() }
+                    setUser(userdata)
+                    setLoading(false)
+                })
         }
     },
 
     getAllUsers: (setAllUsers, setLoading) => {
         setLoading(true)
         usersRef.get()
-        .then((snapShot) => {
-            const allUserData = snapShot.docs.map(doc => doc.data())
-            setAllUsers(allUserData)
-        })
-        .then(() => {
-            setLoading(false)
-        })
+            .then((snapShot) => {
+                const allUserData = snapShot.docs.map(doc => doc.data())
+                setAllUsers(allUserData)
+            })
+            .then(() => {
+                setLoading(false)
+            })
     },
 
 
@@ -72,6 +69,45 @@ export const userMethods = {
             .catch(error => console.log(error))
     },
 
+    editBookmarks: (postId, currentBookmarks, setLoading, setUser) => {
+        setLoading(true)
+        let newBookmarks
+            if (currentBookmarks.includes(postId)) { //checks in the database if the bookmark has already been set
+                newBookmarks = currentBookmarks.filter(bookmark => bookmark !== postId) //when true the postId will be removed
+                usersRef.doc(localStorage.userId)
+                    .set({
+                        bookmarks: newBookmarks
+                    }, { merge: true })
+                    .then(() => { //synchronizes changes with the State 
+                        usersRef.doc(localStorage.userId).get()
+                        .then((snapshot) => {
+                            const data = snapshot.data()
+                            setUser(data)
+                         })
+                    })
+                    .catch(error => console.log(error))
+                    setLoading(false)
+            } else { //when false the postId will be added
+
+                newBookmarks = [...currentBookmarks, postId]
+                usersRef.doc(localStorage.userId)
+                    .set({
+                        bookmarks: newBookmarks
+                    }, { merge: true })
+                    .catch(error => console.log(error))
+                    .then(() => { //synchronizes changes with the State 
+                        usersRef.doc(localStorage.userId).get()
+                        .then((snapshot) => {
+                            const data = snapshot.data()
+                            setUser(data)
+                         })
+                    })
+                    setLoading(false)
+            }
+
+
+    },
+
     uploadImage: (image, type) => {
 
         if (image.length === 0) {
@@ -89,24 +125,24 @@ export const userMethods = {
                 }, () => {
                     // gets the functions from storage refences the image storage in firebase by the children
                     // gets the download url then sets the image from firebase as the value for the imgUrl key:
-                        storage.ref(`/images/${localStorage.userId}+${type}`).getDownloadURL()
+                    storage.ref(`/images/${localStorage.userId}+${type}`).getDownloadURL()
                         .then(fireBaseUrl => {
                             if (type === 'profile') {
                                 usersRef.doc(localStorage.userId)
-                                .set(
-                                    {
-                                    profileImageURL: fireBaseUrl
-                                }
-                                ,{merge: true}
-                                )
+                                    .set(
+                                        {
+                                            profileImageURL: fireBaseUrl
+                                        }
+                                        , { merge: true }
+                                    )
                             } else if (type === 'background') {
                                 usersRef.doc(localStorage.userId)
-                                .set(
-                                    {
-                                    backgroundImageURL: fireBaseUrl
-                                }
-                                ,{merge: true}
-                                )
+                                    .set(
+                                        {
+                                            backgroundImageURL: fireBaseUrl
+                                        }
+                                        , { merge: true }
+                                    )
                             }
                         })
                 })

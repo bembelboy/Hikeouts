@@ -18,17 +18,17 @@
 }
 
 .EditForm_Label {
-    position: absolute;
-    top: 3rem;
-    right: 15rem;
-    color: white;
-    background-color: rgb(58, 39, 66);
-    padding: 1rem 3rem;
-    font-size: 2.5rem;
-    text-align: center;
-    transition: all .4s ease-out;
-    border-radius: 3px;
-    display: flex;
+position: absolute;
+top: 3rem;
+right: 15rem;
+color: white;
+background-color: rgb(58, 39, 66);
+padding: 1rem 3rem;
+font-size: 2.5rem;
+text-align: center;
+transition: all .4s ease-out;
+border-radius: 3px;
+display: flex;
 align-items: center;
 justify-content: center;
 }
@@ -59,28 +59,33 @@ opacity: 0.9;
     font-size: 2rem;
     background-color: rgb(58, 39, 66);
     transition: all 0.3s;
-    margin: 3px 5rem;
+    margin: 5px 8rem;
+    cursor: pointer;
 }
 
 .EditForm_ResetButton:hover {
-    border: 1px rgb(235,235,245);
-    background-color: rgb(235,235,245);
+    border: 1px  rgb(54, 178, 255);
+    background-color:  rgb(54, 178, 255);
     font-size: 2rem;
-    color: rgb(58, 39, 66);
+    color: white;
     border-radius: 3px;
 }
 
 .EditForm_SubmitButton {
-    border: 1rem solid rgb(99, 199, 91);
-    background-color: rgb(58, 39, 66);
+    border: 0.5rem solid  rgb(54, 178, 255);
+    background-color:  rgb(54, 178, 255);
     font-size: 2rem;
-    color: rgb(99, 199, 91);
+    padding: 0 5rem;
+    margin: 5px;
+    color: white;
     transition: all 0.3s;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .EditForm_SubmitButton:hover {
-    border: 1rem solid white;
-    color: white;
+    border: 0.5rem solid  rgb(54, 178, 255);
+    background-color: white;
+    color: rgb(54, 178, 255);
 }
 
