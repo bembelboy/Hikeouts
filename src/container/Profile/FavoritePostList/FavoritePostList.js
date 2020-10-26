@@ -21,10 +21,11 @@ const PostList = (props) => {
                 favoritePosts.map(post => {
                     return (
                         <Post key={post.postId} postId={props.postId}
-                            userImage={post.profileImageURL} username={post.name} userId={post.userId}
+                            creatorImage={post.profileImageURL} creatorName={post.name} creatorId={post.userId}
                             postImage={post.imgUrl}
                             headline={post.text.title} paragraph={post.text.description}
                             timeMark={post.timeMark.seconds}
+                            likes={post.likes}
                         // location='Not there yet'
                         />
                     )

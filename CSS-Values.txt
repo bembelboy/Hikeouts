@@ -4,5 +4,6 @@
 
 //COLORS
     color: rgb(58, 39, 66); MAIN-Purple
+    color: rgb(235, 235, 245); Decent Background Purple
     color: rgb(54, 178, 255); LightBlueContrast
     color: rgb(99, 199, 91); AgreeGreen

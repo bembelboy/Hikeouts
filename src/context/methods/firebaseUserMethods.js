@@ -108,6 +108,52 @@ export const userMethods = {
 
     },
 
+    editFollowers: (userToFollow) => {
+        usersRef.doc(userToFollow).get() // gets the user u want to follow
+        .then((snapshot) => {
+            const data  = snapshot.data();
+            return data.followers
+        })
+        .then(followers => {
+            if( followers.includes(localStorage.userId)) {
+
+                let newFollowers = followers.filter( followerId => followerId !== localStorage.userId)   
+                usersRef.doc(userToFollow).set({ // if you already followed you will unfollow by True
+                    followers: newFollowers,
+                }, { merge: true })
+                
+                usersRef.doc(localStorage.userId).get()
+                .then((snapshot) => {
+                    const data = snapshot.data()
+                    return data.followed
+                })
+                .then((followed) => {
+                    let newFollowed = followed.filter( f => f !== userToFollow)
+                    usersRef.doc(localStorage.userId).set({ // it will dissapear from your followed List
+                        followed: newFollowed,
+                    }, {merge: true})
+                })
+
+            }else { // you will follow if the statement is false
+
+                usersRef.doc(userToFollow).set({ //you will be on the followerList of the creator
+                    followers: [...followers, localStorage.userId],
+                }, { merge: true })
+
+                usersRef.doc(localStorage.userId).get()
+                .then((snapshot) => {
+                    const data = snapshot.data()
+                    return data.followed
+                })
+                .then((followed) => {
+                    usersRef.doc(localStorage.userId).set({ // it will dissapear from your followed List
+                        followed: [...followed,userToFollow]
+                    },{merge: true})
+                })
+            }
+        })
+    },
+
     uploadImage: (image, type) => {
 
         if (image.length === 0) {

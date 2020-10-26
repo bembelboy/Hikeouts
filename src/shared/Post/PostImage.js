@@ -6,7 +6,6 @@ import Backdrop from '../Backdrop/Backdrop';
 //CSS
 import styles from './PostImage.module.css';
 import IconList from './IconList';
-import Spinner from '../UI/Spinner/Spinner';
 
 
 const PostImage = (props) => {
@@ -21,10 +20,11 @@ const PostImage = (props) => {
                 <Backdrop clicked={props.closeModal} show={props.modalState} background />
             </Modal>
             <IconList 
-                like={props.like}
+                like={props.like} liked={props.liked} likeHandler={props.likeHandler} likeCount={props.likeCount}
+                follow={props.follow} followed={props.followed} followerHandler={props.followerHandler}
                 user={props.user}
                 bookmarked={props.bookmarked} favHandler={props.favHandler}
-                postId={props.postId}
+                postId={props.postId} creatorId={props.creatorId}
             />
         </div>
     );

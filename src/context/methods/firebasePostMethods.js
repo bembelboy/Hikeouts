@@ -20,6 +20,7 @@ export const postMethods = {
                     timeMarkInMilliseconds: timeMark.getTime(),
                     postId: postId,
                     userId: localStorage.userId,
+                    likes: [],
                     text: {
                         description: postInputs.Description,
                         title: postInputs.Title
@@ -63,9 +64,39 @@ export const postMethods = {
         }
     },
 
-    getPosts: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery) => {
+    getPosts: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery, timeRange, setReversed) => {
 
-        PostRefFirestore.orderBy('timeMarkInMilliseconds').limit(3).get()
+console.log( timeRange)
+        setReversed(false)
+        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+        .limit(3).get() // gets the first 3 elements of the ordered array
+            .then((snapshot) => {
+                setLoading(true)
+                const data = snapshot.docs.map((doc) => ({
+                    ...doc.data()
+                }));
+                const lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+                setLastVisible(lastVisiblePost) // sets the last visible post on te page so you can go further
+                setFirstPostQueryId(lastVisiblePost.id) // sets the first so you cant go past it
+                return data
+            })
+            .then((data) => {
+                setAllPosts(data)
+                setLoading(false)
+                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds )
+                .orderBy('timeMarkInMilliseconds').limitToLast(3).get() //gets the last three Elements of the 3
+                .then((snapshot) => {
+                    const lastPost = snapshot.docs[snapshot.docs.length - 1];
+                    setLastPostQuery(lastPost.id) // sets the last one so you cant go past it
+                })
+            })
+    },
+
+    getPostsReversed: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery,timeRange, setReversed) => {
+
+        setReversed(true)
+        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+        .limitToLast(3).get() // gets the first 3 elements of the ordered array
             .then((snapshot) => {
                 setLoading(true)
                 const data = snapshot.docs.map((doc) => ({
@@ -73,23 +104,25 @@ export const postMethods = {
                 }));
                 const lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
                 setLastVisible(lastVisiblePost)
-                setFirstPostQueryId(lastVisiblePost.id)
+                setFirstPostQueryId(lastVisiblePost.id) // sets the first so you cant go past it
                 return data
             })
             .then((data) => {
                 setAllPosts(data)
                 setLoading(false)
-                PostRefFirestore.orderBy('timeMarkInMilliseconds').limitToLast(3).get()
+                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+                .limit(3).get() //gets the last three Elements of the 3
                 .then((snapshot) => {
-                    const lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                    setLastPostQuery(lastVisible.id)
+                    const lastPost = snapshot.docs[snapshot.docs.length - 1];
+                    setLastPostQuery(lastPost.id) // sets the last one so you cant go past it
                 })
             })
     },
 
-    getNextPage: (setAllPosts, setLoading, setLastVisble, setFirstVisible, lastVisible, firstVisible) => {
 
-            return PostRefFirestore.orderBy('timeMarkInMilliseconds').startAfter(lastVisible).limit(3).get()
+    getNextPage: (setAllPosts, setLoading, setLastVisble, setFirstVisible, lastVisible, timeRange ) => {
+            return PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+            .startAfter(lastVisible).limit(3).get()
                 .then((snapshot) => {
                     setLoading(true)
                     const data = snapshot.docs.map((doc) => ({
@@ -107,9 +140,9 @@ export const postMethods = {
                 })
     },
 
-    getPreviousPage: (setAllPosts,  setLoading, setLastVisible, setFirstVisible, firstVisible ) => {
+    getPreviousPage: (setAllPosts,  setLoading, setLastVisible, setFirstVisible, firstVisible, timeRange ) => {
 
-        return PostRefFirestore.orderBy('timeMarkInMilliseconds').endBefore(firstVisible).limitToLast(3).get()
+        return PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds').endBefore(firstVisible).limitToLast(3).get()
             .then((snapshot) => {
                 setLoading(true)
                 const data = snapshot.docs.map((doc) => ({
@@ -170,6 +203,26 @@ export const postMethods = {
             //         setUserFavoritePost(data)
             //     })
 
+    },
+
+    editLikes: ( postId) => {
+        PostRefFirestore.doc(postId).get()
+        .then((snapshot) => { //Getting the requested Post likes Array
+           const  data = snapshot.data()
+           return data.likes
+        })
+        .then( currentLikesArray => {
+            if(currentLikesArray.includes(localStorage.userId)) {// checks if the user already liked the post
+               let newLikesArray = currentLikesArray.filter(uid => uid !== localStorage.userId) //TRUE = removes the like
+                PostRefFirestore.doc(postId).set({
+                    likes: newLikesArray
+                }, {merge: true})
+            } else {
+                PostRefFirestore.doc(postId).set({ //FALSE =  added the like
+                    likes: [...currentLikesArray, localStorage.userId ]
+                }, {merge: true})
+            }
+        })
     },
 
 

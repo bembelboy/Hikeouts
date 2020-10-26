@@ -9,8 +9,8 @@ const PostHeader = (props) => {
         return (
         
             <div className={styles.PostHeader}>
-                <img className={styles.PostHeader_Image} alt='User' src={props.userImage} />
-                <label className={styles.PostHeader_Label} >{props.username}</label>
+                <img className={styles.PostHeader_Image} alt='User' src={props.creatorImage} />
+                <label className={styles.PostHeader_Label} >{props.creatorName}</label>
                 {props.userId === props.creatorId ? 
                     <button className={`${styles.PostHeader_EditButton} ${edit.EditButton}`}> Edit </button>
                     : 
@@ -19,7 +19,7 @@ const PostHeader = (props) => {
                 
             </div>
         );
-    },[props.creatorId, props.userId, props.userImage, props.username])
+    },[props.creatorId, props.creatorImage, props.creatorName, props.userId])
 
     return PostHeaderRender
 }

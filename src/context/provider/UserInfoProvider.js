@@ -29,8 +29,6 @@ const UserProvider = (props) => {
         userMethods.getAllUsers(setAllUsers, setLoading)
     }
 
-
-
     const getUserData = () => {
         userMethods.getUserData(setUser, setLoading)
     }
@@ -45,6 +43,10 @@ const UserProvider = (props) => {
          userMethods.editBookmarks(postId, user.bookmarks, setLoading, setUser)
     }
 
+    const editFollowers = ( userToFollow ) => {
+        userMethods.editFollowers(userToFollow)
+    }
+
     return (
         <firebaseUser.Provider
             value={{
@@ -56,7 +58,8 @@ const UserProvider = (props) => {
                 user, setUser, getUser,
                 getUserData,
                 getAllUsers,allUsers,
-                editBookmarks
+                editBookmarks,
+                editFollowers
             }}>
             {props.children}
         </firebaseUser.Provider>

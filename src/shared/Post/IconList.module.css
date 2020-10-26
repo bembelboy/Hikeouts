@@ -33,7 +33,13 @@
     cursor: pointer;
 }
 
-.IconList_Icon:hover, .IconList_Icon_Blue:hover {
+.IconList_Icon_Green{
+    transition: all .3s;
+    color: rgb(99, 199, 91);
+    cursor: pointer;
+}
+
+.IconList_Icon:hover, .IconList_Icon_Blue:hover, .IconList_Icon_Green:hover {
     transform: scale(1.5);
     cursor: pointer;
 }

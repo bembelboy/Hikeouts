@@ -1,32 +1,53 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import styles from './NewsFeedMenu.module.css';
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
+import { RiArrowLeftSLine, RiArrowRightSLine, RiArrowDropDownLine, RiArrowDropUpLine, RiSearchLine } from 'react-icons/ri';
+
+import NewsFeedMenuDropDown from './NewsFeedMenuDropDown';
+import { firebasePost } from '../../context/provider/PostProvider';
 
 const NewsFeedMenu = (props) => {
 
+    const { getPostsHandler } = useContext(firebasePost)
+
     let Menu = useMemo(() => {
-        return ( 
+        return (
             <div className={styles.NewsFeedMenu_Container}>
-            {props.disablePrev ?
-            <RiArrowLeftSLine  className={styles.NewsFeedMenu_ArrowButton_Disabled} />
-            :
-            <RiArrowLeftSLine  className={styles.NewsFeedMenu_ArrowButton} onClick={props.prevPage} />
-            }
-            <button>Sort after Date </button>
-            {
-                props.disableNext ?
-                <RiArrowRightSLine  className={styles.NewsFeedMenu_ArrowButton_Disabled} />
-                :
-                <RiArrowRightSLine className={styles.NewsFeedMenu_ArrowButton} onClick={props.nextPage} />
-            }
-    
-    
+                {props.disablePrev ?
+                    <RiArrowLeftSLine className={styles.NewsFeedMenu_ArrowButton_Disabled} />
+                    :
+                    <RiArrowLeftSLine className={styles.NewsFeedMenu_ArrowButton} onClick={props.prevPage} />
+                }
+
+                <div className={styles.NewsFeedMenu_SortButtonBox}>
+                    <NewsFeedMenuDropDown />
+                    {props.reversed ?
+                        <>
+                            <RiArrowDropUpLine className={styles.NewsFeedMenu_UpandDownButton_Disabled} />
+                            <span className={styles.NewsFeedMenu_UpandDownButton_Span} >From Newest to Oldest</span>
+                            <RiArrowDropDownLine className={styles.NewsFeedMenu_UpandDownButton} onClick={() => props.fromOldestToNewest()} / >
+                            <span className={styles.NewsFeedMenu_UpandDownButton_Span} >From Oldest to Newest</span>
+                        </>
+                        :
+                        <>
+                            <RiArrowDropUpLine className={styles.NewsFeedMenu_UpandDownButton} onClick={() => props.fromNewestToOldest()} />
+                            <span className={styles.NewsFeedMenu_UpandDownButton_Span} >From Newest to Oldest</span>
+                            <RiArrowDropDownLine className={styles.NewsFeedMenu_UpandDownButton_Disabled} />
+                            <span className={styles.NewsFeedMenu_UpandDownButton_Span} >From Oldest to Newest</span>
+                        </>
+                    }
+                    <RiSearchLine  onClick={() => getPostsHandler()} className={styles.NewsFeedMenu_SearchButton} />
+                </div>
+                {props.disableNext ?
+                    <RiArrowRightSLine className={styles.NewsFeedMenu_ArrowButton_Disabled} />
+                    :
+                    <RiArrowRightSLine className={styles.NewsFeedMenu_ArrowButton} onClick={props.nextPage} />
+                }
             </div>
-         );
-    },[props.disableNext, props.disablePrev, props.nextPage, props.prevPage])
+        );
+    }, [getPostsHandler, props])
 
     return Menu
 }
- 
+
 export default React.memo(NewsFeedMenu);

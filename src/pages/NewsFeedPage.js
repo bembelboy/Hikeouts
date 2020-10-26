@@ -8,35 +8,59 @@ import NewsFeedMenu from '../container/NewsFeed/NewsFeedMenu';
 import Spinner from '../shared/UI/Spinner/Spinner';
 
 const NewsFeedPage = (props) => {
+    //STATE & CONTEXT
     const {
          getPostsHandler, allPosts,
          nextPageHandler, prevPageHandler,
-         lastVisible,firstPostQueryId, lastPostQueryId
+         lastVisible,firstPostQueryId, lastPostQueryId,
+         getPostsReversedHandler, reversed
         } = useContext(firebasePost)
 
     const { getUser } = useContext(firebaseUser)
 
+    //SIDE EFFECTS
     useEffect(useCallback(() => {
         let mounted = true
         if (mounted) {
-            getPostsHandler()
+            getPostsHandler({type: 'all'})
             getUser()
         }
         return () => mounted = false;
     }, [getPostsHandler, getUser]), [])
 
-    let NewsFeedRender = <Spinner  centered />;
+    //LOGIC
 
+    const nextPHandler = () => {
+        if(!reversed) {
+            nextPageHandler()
+        } else {
+            prevPageHandler()
+        }
+    }
+
+    const prevPHandler = () => {
+        if(!reversed) {
+            prevPageHandler()
+        } else {
+            nextPageHandler()
+        }
+    }
+
+    //RENDER
+    let NewsFeedRender = <Spinner  centered />;
     if (allPosts && lastVisible) {
          NewsFeedRender = (
          <div>
          <NewsFeedMenu 
-             nextPage={nextPageHandler}
-             prevPage={prevPageHandler}
+             nextPage={nextPHandler}
+             prevPage={prevPHandler}
              disablePrev={lastVisible.id === firstPostQueryId}
              disableNext={lastVisible.id === lastPostQueryId}
+             reversed={reversed}
+             fromOldestToNewest={getPostsHandler}
+             fromNewestToOldest={getPostsReversedHandler}
          />
-         <NewsFeed allPosts={allPosts} />
+         <NewsFeed allPosts={allPosts}  reversed={reversed} />
          </div>
          )
     }

@@ -32,6 +32,8 @@ export const authMethods = {
           },
           info: [],
           bookmarks: [],
+          followers: [],
+          followed: [],
         })
       })
       .then(() => {

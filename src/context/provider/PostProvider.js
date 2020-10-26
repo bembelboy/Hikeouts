@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 
+import { initialTimeRangeState, timeRangeReducer } from '../reducer/TimeRangeReducer'
 import { postMethods } from '../methods/firebasePostMethods';
 
 const PostProvider = (props) => {
@@ -17,6 +18,10 @@ const PostProvider = (props) => {
     const [firstPostQueryId, setfirstPostQueryId] = useState() //needed for disabling buttons
     const [lastPostQueryId, setLastPostQueryId] = useState() // needed for disabling buttons
 
+    //States for sorting within Pagination
+    const [reversed, setReversed] = useState(false)
+    const [timeRange,dispatchTimeRange] = useReducer(timeRangeReducer, initialTimeRangeState) // the initialState is currentTime
+
     //States for Posting an Image
     const [postId, setPostId] = useState('')
     const [postImage, setPostImage] = useState([])
@@ -26,6 +31,10 @@ const PostProvider = (props) => {
         Description: '',
     })
 
+    const getTimeRangeFromUser = (action) => {
+        dispatchTimeRange(action)
+        getPostsHandler()
+    }
 
 
     const pushPostHandler = (profileImageURL, username) => {
@@ -34,7 +43,10 @@ const PostProvider = (props) => {
     }
 
     const getPostsHandler = () => { // gets 3 posts at a time 
-        postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId)
+        postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed)
+    }
+    const getPostsReversedHandler = () => {
+        postMethods.getPostsReversed (setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed)
     }
 
     const getUserPostHandler = () => {
@@ -42,15 +54,20 @@ const PostProvider = (props) => {
     }
 
     const nextPageHandler = () => {
-        postMethods.getNextPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, lastVisible, firstVisible)
+        console.log(timeRange)
+        postMethods.getNextPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, lastVisible, timeRange)
     }
 
     const prevPageHandler = () => {
-        postMethods.getPreviousPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, firstVisible)
+        postMethods.getPreviousPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, firstVisible, timeRange)
     }
 
     const getFavoritePosts = (bookmarks) => {
         postMethods.getUserFavoritePost(setFavoritePosts, bookmarks)
+    }
+
+    const editLikes = (postId) => {
+        postMethods.editLikes(postId)
     }
 
 
@@ -67,7 +84,10 @@ const PostProvider = (props) => {
                 loading,
                 nextPageHandler, prevPageHandler,
                 lastVisible, firstPostQueryId, lastPostQueryId,
-                favoritePosts, getFavoritePosts, setFavoritePosts
+                favoritePosts, getFavoritePosts, setFavoritePosts,
+                editLikes,
+                reversed, getPostsReversedHandler,
+                timeRange, getTimeRangeFromUser, dispatchTimeRange
             }}>
             {props.children}
         </firebasePost.Provider>
