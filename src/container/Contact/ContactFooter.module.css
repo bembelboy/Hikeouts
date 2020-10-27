@@ -1,0 +1,37 @@
+.ContactFooter_Container_Background {
+        position: absolute;
+        bottom:0;
+        min-height: 40rem;
+        width: 100%;
+        background-color: rgb(58, 39, 66);
+        clip-path: polygon(0 70%, 100% 54%, 100% 100%, 0% 100%);
+}
+
+.ContactFooter_Container_Foreground {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+}
+
+.ContactFooter_Container_Foreground:first-child {
+    margin-left: 5rem;
+    background-color: yellow;
+    height: 100rem;
+}
+
+.ContactFooter_ListItem {
+    list-style-type: none;
+    color: white;
+    margin-bottom: 5rem;;
+}
+
+
+.ContactFooter_ListItem_Span {
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    padding: 2rem;
+}

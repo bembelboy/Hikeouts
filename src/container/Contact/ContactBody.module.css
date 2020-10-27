@@ -1,0 +1,24 @@
+.ContactBody_Container {
+position: relative;
+   width:60%; 
+   background-color:rgb(235, 235, 245);
+   height: 40vh;
+   z-index: 10;
+   margin: 0 auto;
+   color: rgb(58, 39, 66);
+}
+
+.ContactBody_Heading {
+    text-align: left;
+}
+
+.ContactBody_Paragraph {
+    text-align: left;
+    line-height: 1.4;
+    font-size: 2rem;
+}
+
+.ContactBody_Textbox {
+    height: 50%;
+    width: 100%;
+}

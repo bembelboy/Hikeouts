@@ -11,6 +11,7 @@ import MainNavigation from './shared/Navigation/MainNavigation';
 import AuthMain from './container/Auth/AuthMain';
 import EditPage from './pages/EditPage';
 import PostPage from './pages/PostPage';
+import ContactPage from './pages/ContactPage';
 import NewsFeedPage from './pages/NewsFeedPage';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route component={PostPage} path='/createPost'/>  
         <Route component={ProfilePage} path='/profile/:id' exact />
         <Route component={EditPage}  path={'/profile/:id/edit'} exact /> 
+        <Route component={ContactPage} path={'/Contact'} exact />
         <Route component={LandingPage} path='/' />
         <Route component={AuthMain} path='/auth' />
       </Switch>
