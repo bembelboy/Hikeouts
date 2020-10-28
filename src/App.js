@@ -22,7 +22,7 @@ function App() {
     <div className="App">
       <MainNavigation />
       <Switch>
-        <Route  component={NewsFeedPage} path='/myFellows' />
+        <Route  component={NewsFeedPage} path='/Feed' />
         <Route component={PostPage} path='/createPost'/>  
         <Route component={ProfilePage} path='/profile/:id' exact />
         <Route component={EditPage}  path={'/profile/:id/edit'} exact /> 

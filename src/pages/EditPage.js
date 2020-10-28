@@ -51,7 +51,7 @@ const EditPage = (props) => {
 
     let EditP = <Spinner  centered/>
 
-    if (!loading) {
+    if (!loading || localStorage.userId) {
         EditP = (
             <div className={styles.EditPage_Container}>
                 <EditForm

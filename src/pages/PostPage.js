@@ -10,6 +10,7 @@ import CreatePostHeader from '../container/AddPost/CreatePostHeader';
 import Backdrop from '../shared/Backdrop/Backdrop'
 
 import styles from './PostPage.module.css';
+import { Redirect } from 'react-router-dom';
 
 const PostPage = (props) => {
     const {
@@ -17,6 +18,7 @@ const PostPage = (props) => {
         postInputs, setPostInputs,
         setPostId,
         pushPostHandler,
+        submittedPost, setSubmittedPost
     } = useContext(firebasePost)
 
     const { getUser, user, } = useContext(firebaseUser)
@@ -29,8 +31,9 @@ const PostPage = (props) => {
             Title: '',
             Description: '',
         })
-        setPostImage([])
 
+        setPostImage([])
+        setSubmittedPost(false)
         getUser()
     }, [])
 
@@ -77,6 +80,14 @@ const PostPage = (props) => {
                 <Backdrop  show background />
             </div>
         )
+    }
+
+    if(submittedPost && user) {
+      PostP = <Redirect  to='/Feed' /> 
+    }
+
+    if(!localStorage.userId) {
+      PostP = <Redirect to='/' />
     }
     return (
         PostP

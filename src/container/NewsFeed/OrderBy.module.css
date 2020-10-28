@@ -1,0 +1,25 @@
+.OrderBy_Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid white;
+    width: 100%;
+    margin: 1rem auto;
+}
+
+.OrderBy_CheckBox {
+    display: none;
+}
+
+.OrderBy_Label {
+    color: white;
+    background-color: rgb(58, 39, 66);
+    transition: all 0.3s;
+    width: 100%;
+    padding: 1.5rem 2rem;
+}
+
+.OrderBy_CheckBox:checked + .OrderBy_Label {
+    background-color: white;
+    color: rgb(58, 39, 66);
+}

@@ -8,19 +8,22 @@ const PostRefStorage = storage.ref('/PostImages/')
 export const postMethods = {
 
 
-    pushPostData: (postInputs, postId, profileImageURL, username, setLoading) => {
+    pushPostData: (postInputs, postId, profileImageURL, username, setLoading, setSubmitted) => {
+
+        let profileImage = profileImageURL === undefined ? '' : profileImageURL
         const timeMark = new Date()
         setLoading(true)
         PostRefFirestore.doc(postId)
             .set(
                 {
                     name: username,
-                    profileImageURL: profileImageURL,
+                    profileImageURL: profileImage,
                     timeMark: timeMark,
                     timeMarkInMilliseconds: timeMark.getTime(),
                     postId: postId,
                     userId: localStorage.userId,
                     likes: [],
+                    likeCount: 0,
                     text: {
                         description: postInputs.Description,
                         title: postInputs.Title
@@ -29,6 +32,7 @@ export const postMethods = {
                 , { merge: true })
             .then(() => {
                 setLoading(false)
+                setSubmitted(true)
             })
             .catch(error => console.log(error))
     },
@@ -64,11 +68,11 @@ export const postMethods = {
         }
     },
 
-    getPosts: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery, timeRange, setReversed) => {
+    getPosts: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery, timeRange, setReversed, orderByVal) => {
 
 console.log( timeRange)
         setReversed(false)
-        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
         .limit(3).get() // gets the first 3 elements of the ordered array
             .then((snapshot) => {
                 setLoading(true)
@@ -83,8 +87,8 @@ console.log( timeRange)
             .then((data) => {
                 setAllPosts(data)
                 setLoading(false)
-                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds )
-                .orderBy('timeMarkInMilliseconds').limitToLast(3).get() //gets the last three Elements of the 3
+                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
+                .limitToLast(3).get() //gets the last three Elements of the 3
                 .then((snapshot) => {
                     const lastPost = snapshot.docs[snapshot.docs.length - 1];
                     setLastPostQuery(lastPost.id) // sets the last one so you cant go past it
@@ -92,10 +96,10 @@ console.log( timeRange)
             })
     },
 
-    getPostsReversed: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery,timeRange, setReversed) => {
+    getPostsReversed: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery,timeRange, setReversed, orderByVal) => {
 
         setReversed(true)
-        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
         .limitToLast(3).get() // gets the first 3 elements of the ordered array
             .then((snapshot) => {
                 setLoading(true)
@@ -110,7 +114,7 @@ console.log( timeRange)
             .then((data) => {
                 setAllPosts(data)
                 setLoading(false)
-                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
                 .limit(3).get() //gets the last three Elements of the 3
                 .then((snapshot) => {
                     const lastPost = snapshot.docs[snapshot.docs.length - 1];
@@ -215,11 +219,14 @@ console.log( timeRange)
             if(currentLikesArray.includes(localStorage.userId)) {// checks if the user already liked the post
                let newLikesArray = currentLikesArray.filter(uid => uid !== localStorage.userId) //TRUE = removes the like
                 PostRefFirestore.doc(postId).set({
-                    likes: newLikesArray
+                    likes: newLikesArray,
+                    likeCount: newLikesArray.length
                 }, {merge: true})
             } else {
+                let newLikesArray = [...currentLikesArray, localStorage.userId ]
                 PostRefFirestore.doc(postId).set({ //FALSE =  added the like
-                    likes: [...currentLikesArray, localStorage.userId ]
+                    likes: newLikesArray,
+                    likeCount: newLikesArray.length,
                 }, {merge: true})
             }
         })

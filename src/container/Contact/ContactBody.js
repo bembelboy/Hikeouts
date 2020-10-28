@@ -6,7 +6,7 @@ const ContactBody = (props) => {
     return (
         <div className={styles.ContactBody_Container}>
             <div className={styles.ContactBody_Textbox}>
-                <h2 className={styles.ContactBody_Heading} > Welcome to my first own Coding Project</h2>
+                <h2 className={styles.ContactBody_Heading} > Welcome to my first Coding Project</h2>
                 <p className={styles.ContactBody_Paragraph}>
                     This App has the purpose to share nice Locations with each other. Primarily I build this App to show how far my Programmingskills are.
                     It took me about 2 to 3 months to code this App so i hope you enjoy it. If you have any suggestions what I could improve you can write

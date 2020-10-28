@@ -21,6 +21,7 @@ const PostProvider = (props) => {
     //States for sorting within Pagination
     const [reversed, setReversed] = useState(false)
     const [timeRange,dispatchTimeRange] = useReducer(timeRangeReducer, initialTimeRangeState) // the initialState is currentTime
+    const [orderByVal, setOrderbyVal] = useState('timeMarkInMilliseconds')
 
     //States for Posting an Image
     const [postId, setPostId] = useState('')
@@ -30,26 +31,22 @@ const PostProvider = (props) => {
         Title: '',
         Description: '',
     })
-
-    const getTimeRangeFromUser = (action) => {
-        dispatchTimeRange(action)
-        getPostsHandler()
-    }
+    const [submittedPost, setSubmittedPost] = useState(false)
 
 
     const pushPostHandler = (profileImageURL, username) => {
-        postMethods.pushPostData(postInputs, postId, profileImageURL, username, setLoading)
+        postMethods.pushPostData(postInputs, postId, profileImageURL, username, setLoading, setSubmittedPost)
         postMethods.uploadPostImage(postImage, postId, setPostImageUrl)
     }
 
     const getPostsHandler = () => { // gets 3 posts at a time 
-        postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed)
+        postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed, orderByVal)
     }
     const getPostsReversedHandler = () => {
-        postMethods.getPostsReversed (setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed)
+        postMethods.getPostsReversed (setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed, orderByVal)
     }
 
-    const getUserPostHandler = () => {
+    const getUserPostHandler = () => { // gets All Posts from one User
         postMethods.getUserPosts(setUserPosts, setLoading)
     }
 
@@ -87,7 +84,9 @@ const PostProvider = (props) => {
                 favoritePosts, getFavoritePosts, setFavoritePosts,
                 editLikes,
                 reversed, getPostsReversedHandler,
-                timeRange, getTimeRangeFromUser, dispatchTimeRange
+                timeRange, dispatchTimeRange,
+                orderByVal, setOrderbyVal,
+                submittedPost, setSubmittedPost
             }}>
             {props.children}
         </firebasePost.Provider>

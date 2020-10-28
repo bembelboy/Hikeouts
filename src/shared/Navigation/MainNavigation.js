@@ -2,14 +2,18 @@
 import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { uuid } from 'uuidv4';
 import classnames from 'classnames';
-import { firebaseAuth } from '../../context/provider/AuthProvider';
+import { withRouter } from 'react-router-dom';
 
 //COMPONENTS
 import NavList from './NavList';
 import NavButton from './NavButton';
 import Backdrop from '../Backdrop/Backdrop';
+
 //CSS
 import styles from './MainNavigation.module.css';
+
+//CONTEXT
+import { firebaseAuth } from '../../context/provider/AuthProvider';
 
 const MainNavigation = (props) => {
 
@@ -42,15 +46,15 @@ const MainNavigation = (props) => {
             active: false,
         },
         {
-            name: 'My Posts',
+            name: 'new Post',
             id: uuid(),
             link: '/createPost',
             active: false,
         },
         {
-            name: 'Fellows',
+            name: 'Feed',
             id: uuid(),
-            link: '/myFellows',
+            link: '/Feed',
             active: false,
 
         },
@@ -87,6 +91,7 @@ const MainNavigation = (props) => {
     const handleLogout = useCallback(() => {
         showNavigationHandler()
         handleSignout()
+        props.history.replace('/')
     },[showNavigationHandler, handleSignout])
 
 
@@ -123,4 +128,4 @@ const MainNavigation = (props) => {
     );
 }
 
-export default MainNavigation;
+export default withRouter(MainNavigation);

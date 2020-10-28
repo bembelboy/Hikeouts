@@ -1,10 +1,10 @@
-.NewsFeedMenuDropDown_Container {
+.SelectTimeSpanMenu_Container {
     position: relative;
     display: inline-block;
     transition: all 0.3s;
 }
 
-.NewsFeedMenuDropDown_Button {
+.SelectTimeSpanMenu_Button {
     background-color: rgb(58, 39, 66);
     color: white;
     height: 5rem;
@@ -14,7 +14,7 @@
     cursor: pointer;
 }
 
-.NewsFeedMenuDropDown_ContentBox {
+.SelectTimeSpanMenu_ContentBox {
     display: block;
     opacity: 0;
     position: absolute;
@@ -26,7 +26,7 @@
     transition: all 0.3s ease-out;
 }
 
-.NewsFeedMenuDropDown_Span {
+.SelectTimeSpanMenu_Span {
     border-top: 1px solid rgb(235, 235, 245, 0.5);
     color: white;
     padding: 1.2rem 1.6rem;
@@ -35,21 +35,21 @@
     transition: all 0.3s;
 }
 
-.NewsFeedMenuDropDown_Span:hover {
+.SelectTimeSpanMenu_Span:hover {
     background-color: white;
     color: rgb(58, 39, 66);
 }
 
-.NewsFeedMenuDropDown_Container:hover .NewsFeedMenuDropDown_ContentBox{
+.SelectTimeSpanMenu_Container:hover .SelectTimeSpanMenu_ContentBox{
     animation: comeIn 0.3s ease-out both;
 }
 
-.NewsFeedMenuDropDown_Container:hover .NewsFeedMenuDropDown_Button{
+.SelectTimeSpanMenu_Container:hover .SelectTimeSpanMenu_Button{
     background-color: rgb(54, 178, 255);
     border-radius: 2px;
 }
 
-.NewsFeedMenuDropDown_Span:active {
+.SelectTimeSpanMenu_Span:active {
     background-color: rgb(58, 39, 66);
     color: white;
 }

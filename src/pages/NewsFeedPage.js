@@ -13,7 +13,8 @@ const NewsFeedPage = (props) => {
          getPostsHandler, allPosts,
          nextPageHandler, prevPageHandler,
          lastVisible,firstPostQueryId, lastPostQueryId,
-         getPostsReversedHandler, reversed
+         getPostsReversedHandler, reversed,
+         orderByVal, setOrderbyVal,
         } = useContext(firebasePost)
 
     const { getUser } = useContext(firebaseUser)
@@ -23,6 +24,7 @@ const NewsFeedPage = (props) => {
         let mounted = true
         if (mounted) {
             getPostsHandler({type: 'all'})
+            setOrderbyVal('timeMarkInMilliseconds')
             getUser()
         }
         return () => mounted = false;
@@ -59,6 +61,7 @@ const NewsFeedPage = (props) => {
              reversed={reversed}
              fromOldestToNewest={getPostsHandler}
              fromNewestToOldest={getPostsReversedHandler}
+             orderByVal={orderByVal}
          />
          <NewsFeed allPosts={allPosts}  reversed={reversed} />
          </div>

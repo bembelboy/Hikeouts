@@ -71,8 +71,8 @@ const AuthPage = (props) => {
             </div>
         );
 
-    if ( token ) {
-        AuthMain = <Redirect to={'/profile/' + userId} />
+    if ( token && localStorage.userId ) {
+        AuthMain = <Redirect to={'/profile/' + localStorage.userId  + '/'} /> 
     }
 
     return (

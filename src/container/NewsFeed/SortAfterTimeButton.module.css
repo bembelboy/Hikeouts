@@ -1,0 +1,31 @@
+.NewsFeedMenu_SortButtonBox {
+    display: flex;
+    align-items: center;
+}
+
+.NewsFeedMenu_UpandDownButton {
+    color: white;
+    font-size: 3rem;
+    border: 2px solid white;
+    border-radius: 50%;
+    transition: all 0.3s;
+    margin: 1rem
+}
+
+.NewsFeedMenu_UpandDownButton:hover {
+    transform: scale(1.2);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+.NewsFeedMenu_UpandDownButton_Disabled {
+    color: grey;
+    font-size: 3rem;
+    border-radius: 50%;
+    border: 2px solid rgb(54, 178, 255);
+    transition: all 0.3s;
+    margin: 1rem;
+}
+
+.NewsFeedMenu_UpandDownButton_Span {
+    color: rgb(235, 235, 245);
+}
