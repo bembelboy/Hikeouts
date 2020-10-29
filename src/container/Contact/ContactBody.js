@@ -18,8 +18,7 @@ const ContactBody = (props) => {
                 <p className={styles.ContactBody_Paragraph}>
                 Right now I am a student for Computer Science in Germany but I am not very successful at studying. <br/>
                 Over the the combination of working creativly and my degree course I started coding the frontend of WebApps.
-                Right now I am looking for opportunities to get some experience on a bigger Project.
-                 Or to improve my coding skills even further.
+                Right now I am looking for opportunities to get some experience on a bigger Project to improve my coding skills even further.
 
         </p>
             </div>

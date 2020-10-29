@@ -6,29 +6,37 @@ import styles from './SelectTimeSpanMenu.module.css';
 const SelectTimeSpanMenu = (props) => {
     const { timeRange, dispatchTimeRange } = useContext(firebasePost)
     return (
-        <div className={styles.SelectTimeSpanMenu_Container}>
-            <button className={styles.SelectTimeSpanMenu_Button}>{timeRange.buttonText}</button>
-            <div className={styles.SelectTimeSpanMenu_ContentBox}>
-                <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'all' })} >
-                    Show all Posts
+        <>
+            {props.orderByVal === 'timeMarkInMilliseconds' ?
+                <div className={styles.SelectTimeSpanMenu_Container}>
+                    <button className={styles.SelectTimeSpanMenu_Button}>{timeRange.buttonText}</button>
+                    <div className={styles.SelectTimeSpanMenu_ContentBox}>
+                        <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'all' })} >
+                            Show all Posts
                 </span>
-                <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastYear' })} >
-                    Show Posts of the last Year
+                        <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastYear' })} >
+                            Show Posts of the last Year
                 </span>
-                <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastMonth' })} >
-                    Show Posts of the last Month
+                        <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastMonth' })} >
+                            Show Posts of the last Month
                 </span>
-                <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastWeek' })} >
-                    Show Posts of the last Week
+                        <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastWeek' })} >
+                            Show Posts of the last Week
                 </span>
-                <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastDay' })} >
-                    Show Posts of the last Day
+                        <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastDay' })} >
+                            Show Posts of the last Day
                 </span>
-                <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastHour' })} >
-                    Show Posts of the last Hour
+                        <span className={styles.SelectTimeSpanMenu_Span} onClick={() => dispatchTimeRange({ type: 'lastHour' })} >
+                            Show Posts of the last Hour
                 </span>
-            </div>
-        </div>
+                    </div>
+                </div>
+                :
+                <div className={styles.SelectTimeSpanMenu_Container_Empty}>
+
+                </div>
+            }
+        </>
     );
 }
 

@@ -20,8 +20,8 @@ const PostProvider = (props) => {
 
     //States for sorting within Pagination
     const [reversed, setReversed] = useState(false)
-    const [timeRange,dispatchTimeRange] = useReducer(timeRangeReducer, initialTimeRangeState) // the initialState is currentTime
-    const [orderByVal, setOrderbyVal] = useState('timeMarkInMilliseconds')
+    const [timeRange, dispatchTimeRange] = useReducer(timeRangeReducer, initialTimeRangeState) // the initialState is currentTime
+    const [orderByVal, setOrderByVal] = useState('timeMarkInMilliseconds')
 
     //States for Posting an Image
     const [postId, setPostId] = useState('')
@@ -40,10 +40,37 @@ const PostProvider = (props) => {
     }
 
     const getPostsHandler = () => { // gets 3 posts at a time 
-        postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed, orderByVal)
+        setReversed(false)
+        let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0; // is needed to set the range dependent on which filter is active
+        postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setFirstVisble, setfirstPostQueryId, setLastPostQueryId, range, orderByVal)
     }
     const getPostsReversedHandler = () => {
-        postMethods.getPostsReversed (setAllPosts, setLoading, setLastVisible, setfirstPostQueryId, setLastPostQueryId, timeRange, setReversed, orderByVal)
+        setReversed(true)
+        let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0;
+        postMethods.getPostsReversed(setAllPosts, setLoading, setLastVisible, setFirstVisble, setfirstPostQueryId, setLastPostQueryId, range, orderByVal)
+    }
+
+    const getPostsAfterTimeHandler = () => {
+        setOrderByVal('timeMarkInMilliseconds')
+        if (reversed) {
+            let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0;
+            postMethods.getPostsReversed(setAllPosts, setLoading, setLastVisible, setFirstVisble, setfirstPostQueryId, setLastPostQueryId, range, orderByVal)
+        } else if(!reversed){
+            let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0; // is needed to set the range dependent on which filter is active
+            postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setFirstVisble, setfirstPostQueryId, setLastPostQueryId, range, orderByVal)
+        }
+    }
+
+    const getPostsAfterLikesHandler = () => {
+        setOrderByVal('likeCount')
+        setReversed(false)
+        if (reversed) {
+            let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0;
+            postMethods.getPostsReversed(setAllPosts, setLoading, setLastVisible, setFirstVisble, setfirstPostQueryId, setLastPostQueryId, range, orderByVal)
+        } else if(!reversed){
+            let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0; // is needed to set the range dependent on which filter is active
+            postMethods.getPosts(setAllPosts, setLoading, setLastVisible, setFirstVisble, setfirstPostQueryId, setLastPostQueryId, range, orderByVal)
+        }
     }
 
     const getUserPostHandler = () => { // gets All Posts from one User
@@ -51,12 +78,20 @@ const PostProvider = (props) => {
     }
 
     const nextPageHandler = () => {
-        console.log(timeRange)
-        postMethods.getNextPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, lastVisible, timeRange)
+        if (reversed) {
+            postMethods.getNextPageReversed(setAllPosts, setLoading, setLastVisible, setFirstVisble, lastVisible, timeRange, orderByVal)
+        } else {
+            postMethods.getNextPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, lastVisible, timeRange, orderByVal)
+        }
     }
 
     const prevPageHandler = () => {
-        postMethods.getPreviousPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, firstVisible, timeRange)
+        if (reversed) {
+            postMethods.getPreviousPageReversed(setAllPosts, setLoading, setLastVisible, setFirstVisble, firstVisible, timeRange, orderByVal)
+        } else {
+            postMethods.getPreviousPage(setAllPosts, setLoading, setLastVisible, setFirstVisble, firstVisible, timeRange, orderByVal)
+        }
+
     }
 
     const getFavoritePosts = (bookmarks) => {
@@ -66,7 +101,6 @@ const PostProvider = (props) => {
     const editLikes = (postId) => {
         postMethods.editLikes(postId)
     }
-
 
     return (
         <firebasePost.Provider
@@ -80,13 +114,14 @@ const PostProvider = (props) => {
                 userPosts, getUserPostHandler,
                 loading,
                 nextPageHandler, prevPageHandler,
-                lastVisible, firstPostQueryId, lastPostQueryId,
+                firstVisible, lastVisible, firstPostQueryId, lastPostQueryId,
                 favoritePosts, getFavoritePosts, setFavoritePosts,
                 editLikes,
                 reversed, getPostsReversedHandler,
                 timeRange, dispatchTimeRange,
-                orderByVal, setOrderbyVal,
-                submittedPost, setSubmittedPost
+                orderByVal, setOrderByVal,
+                submittedPost, setSubmittedPost,
+                getPostsAfterTimeHandler, getPostsAfterLikesHandler,
             }}>
             {props.children}
         </firebasePost.Provider>

@@ -54,6 +54,11 @@
     color: white;
 }
 
+.SelectTimeSpanMenu_Container_Empty {
+    height: 5rem;
+    width: 16rem;
+}
+
 @keyframes comeIn {
     0% { top: 0; opacity: 0.1;}
     75% { top: 4rem; opacity: 0.8;}

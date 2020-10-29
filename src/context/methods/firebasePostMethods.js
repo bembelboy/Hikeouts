@@ -23,7 +23,7 @@ export const postMethods = {
                     postId: postId,
                     userId: localStorage.userId,
                     likes: [],
-                    likeCount: 0,
+                    likeCount: 10000000, // the COunter is needed to get the Elements after Likes in decendent Order
                     text: {
                         description: postInputs.Description,
                         title: postInputs.Title
@@ -68,64 +68,82 @@ export const postMethods = {
         }
     },
 
-    getPosts: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery, timeRange, setReversed, orderByVal) => {
+    getPosts: (setAllPosts, setLoading, setLastVisible, setFirstVisible, setFirstPostQueryId, setLastPostQuery, range, orderByVal) => {
 
-console.log( timeRange)
-        setReversed(false)
-        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
+        PostRefFirestore.where(orderByVal, '>=', range ).orderBy(orderByVal)
         .limit(3).get() // gets the first 3 elements of the ordered array
             .then((snapshot) => {
                 setLoading(true)
                 const data = snapshot.docs.map((doc) => ({
                     ...doc.data()
                 }));
-                const lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+                console.log(data)
+                const lastVisiblePost = snapshot.docs[snapshot.docs.length  -1];
+                const firstVisiblePost = snapshot.docs[0]
                 setLastVisible(lastVisiblePost) // sets the last visible post on te page so you can go further
-                setFirstPostQueryId(lastVisiblePost.id) // sets the first so you cant go past it
+                setFirstVisible(firstVisiblePost)
+                setFirstPostQueryId(data[0].postId) // sets the first so you cant go past it
+                console.log('LastVisiblePostId',lastVisiblePost)
+                console.log('FirstVisiblePostId',firstVisiblePost)
+                console.log('firstPostQuery', data[0].postId )
                 return data
             })
             .then((data) => {
                 setAllPosts(data)
                 setLoading(false)
-                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
+                PostRefFirestore.where(orderByVal, '>=', range ).orderBy(orderByVal)
                 .limitToLast(3).get() //gets the last three Elements of the 3
                 .then((snapshot) => {
-                    const lastPost = snapshot.docs[snapshot.docs.length - 1];
-                    setLastPostQuery(lastPost.id) // sets the last one so you cant go past it
+                    const data = snapshot.docs.map((doc) => ({
+                        ...doc.data()
+                    }));
+                    const lastPost = data[data.length - 1];
+                    setLastPostQuery(lastPost.postId) // sets the last one so you cant go past it
+                    console.log('data',data)
+                    console.log('lastPostQuery',lastPost.postId)
                 })
             })
     },
 
-    getPostsReversed: (setAllPosts, setLoading, setLastVisible, setFirstPostQueryId, setLastPostQuery,timeRange, setReversed, orderByVal) => {
+    getPostsReversed: (setAllPosts, setLoading, setLastVisible, setFirstVisible, setFirstPostQueryId, setLastPostQueryId, range, orderByVal) => {
 
-        setReversed(true)
-        PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
+        PostRefFirestore.where(orderByVal, '>=', range ).orderBy(orderByVal)
         .limitToLast(3).get() // gets the first 3 elements of the ordered array
             .then((snapshot) => {
                 setLoading(true)
                 const data = snapshot.docs.map((doc) => ({
                     ...doc.data()
                 }));
-                const lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+                const lastVisiblePost =  snapshot.docs[0];
+                const firstVisiblePost = snapshot.docs[snapshot.docs.length - 1];
                 setLastVisible(lastVisiblePost)
-                setFirstPostQueryId(lastVisiblePost.id) // sets the first so you cant go past it
+                setFirstVisible(firstVisiblePost)
+                setFirstPostQueryId(data[data.length -1].postId) // sets the first so you cant go past it Note that it is the last of the 3 because it gets reversed in the NewsFeedComponent
                 return data
             })
             .then((data) => {
                 setAllPosts(data)
                 setLoading(false)
-                PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy(orderByVal)
+                PostRefFirestore.where(orderByVal, '>=', range ).orderBy(orderByVal)
                 .limit(3).get() //gets the last three Elements of the 3
                 .then((snapshot) => {
-                    const lastPost = snapshot.docs[snapshot.docs.length - 1];
-                    setLastPostQuery(lastPost.id) // sets the last one so you cant go past it
+                    const data = snapshot.docs.map((doc) => ({
+                        ...doc.data()
+                    }));
+                    const lastPost = data[0];
+                    setLastPostQueryId(lastPost.postId) // sets the last one so you cant go past it
+                    console.log(data)
+                    console.log(lastPost.postId)
                 })
             })
     },
 
 
-    getNextPage: (setAllPosts, setLoading, setLastVisble, setFirstVisible, lastVisible, timeRange ) => {
-            return PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds')
+    getNextPage: (setAllPosts, setLoading, setLastVisble, setFirstVisible, lastVisible, timeRange, orderByVal ) => {
+
+
+        let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0; // is needed to set the range dependent on which filter is active  
+            return PostRefFirestore.where(orderByVal, '>', range ).orderBy(orderByVal)
             .startAfter(lastVisible).limit(3).get()
                 .then((snapshot) => {
                     setLoading(true)
@@ -136,6 +154,7 @@ console.log( timeRange)
                     const lastVisiblePost = snapshot.docs[snapshot.docs.length  -1];
                     setLastVisble(lastVisiblePost)
                     setFirstVisible(firstVisiblePost)
+                    console.log('LastVisibleInNext', lastVisiblePost.id)
                     return data
                 })
                 .then((data) => {
@@ -144,9 +163,33 @@ console.log( timeRange)
                 })
     },
 
-    getPreviousPage: (setAllPosts,  setLoading, setLastVisible, setFirstVisible, firstVisible, timeRange ) => {
+    getNextPageReversed: (setAllPosts, setLoading, setLastVisble, setFirstVisible, lastVisible, timeRange, orderByVal ) => {
 
-        return PostRefFirestore.where('timeMarkInMilliseconds', '>', timeRange.timeInMilliSeconds ).orderBy('timeMarkInMilliseconds').endBefore(firstVisible).limitToLast(3).get()
+        let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0; // is needed to set the range dependent on which filter is active  
+        return PostRefFirestore.where(orderByVal, '>', range ).orderBy(orderByVal)
+        .endBefore(lastVisible).limitToLast(3).get()
+            .then((snapshot) => {
+                setLoading(true)
+                const data = snapshot.docs.map((doc) => ({
+                    ...doc.data()
+                }));
+                const firstVisiblePost = snapshot.docs[snapshot.docs.length  -1];
+                const lastVisiblePost =  snapshot.docs[0];
+                setLastVisble(lastVisiblePost)
+                setFirstVisible(firstVisiblePost)
+                console.log('LastVisibleInNext', lastVisiblePost.id)
+                return data
+            })
+            .then((data) => {
+                setAllPosts(data)
+                setLoading(false)
+            })
+    },
+
+    getPreviousPage: (setAllPosts,  setLoading, setLastVisible, setFirstVisible, firstVisible, timeRange, orderByVal ) => {
+
+        let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0 // is needed to set the range dependent on which filter is active  
+        return PostRefFirestore.where(orderByVal, '>', range ).orderBy(orderByVal).endBefore(firstVisible).limitToLast(3).get()
             .then((snapshot) => {
                 setLoading(true)
                 const data = snapshot.docs.map((doc) => ({
@@ -154,6 +197,28 @@ console.log( timeRange)
                 }));
                 const firstVisiblePost = snapshot.docs[0]
                 const lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+                setFirstVisible(firstVisiblePost)
+                setLastVisible(lastVisiblePost)
+                return data 
+            })
+            .then((data) => {
+                setAllPosts(data)
+                setLoading(false)
+            })
+
+    },
+
+    getPreviousPageReversed: (setAllPosts,  setLoading, setLastVisible, setFirstVisible, firstVisible, timeRange, orderByVal ) => {
+
+        let range = orderByVal === 'timeMarkInMilliseconds' ? timeRange.timeInMilliSeconds : 0 // is needed to set the range dependent on which filter is active  
+        return PostRefFirestore.where(orderByVal, '>', range ).orderBy(orderByVal).startAfter(firstVisible).limit(3).get()
+            .then((snapshot) => {
+                setLoading(true)
+                const data = snapshot.docs.map((doc) => ({
+                    ...doc.data()
+                }));
+                const firstVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+                const lastVisiblePost =  snapshot.docs[0];
                 setFirstVisible(firstVisiblePost)
                 setLastVisible(lastVisiblePost)
                 return data 
@@ -213,20 +278,25 @@ console.log( timeRange)
         PostRefFirestore.doc(postId).get()
         .then((snapshot) => { //Getting the requested Post likes Array
            const  data = snapshot.data()
-           return data.likes
+           return {
+               likes: data.likes,
+               likeCount: data.likeCount
+           }
         })
-        .then( currentLikesArray => {
-            if(currentLikesArray.includes(localStorage.userId)) {// checks if the user already liked the post
-               let newLikesArray = currentLikesArray.filter(uid => uid !== localStorage.userId) //TRUE = removes the like
+        .then( dataObj => {
+            if(dataObj.likes.includes(localStorage.userId)) {// checks if the user already liked the post
+               let newLikesArray = dataObj.likes.filter(uid => uid !== localStorage.userId) //TRUE = removes the like
+               let newLikeCount = dataObj.likeCount -1
                 PostRefFirestore.doc(postId).set({
                     likes: newLikesArray,
-                    likeCount: newLikesArray.length
+                    likeCount: newLikeCount
                 }, {merge: true})
             } else {
-                let newLikesArray = [...currentLikesArray, localStorage.userId ]
+                let newLikesArray = [...dataObj.likes, localStorage.userId ]
+                let newLikeCount = dataObj.likeCount +1
                 PostRefFirestore.doc(postId).set({ //FALSE =  added the like
                     likes: newLikesArray,
-                    likeCount: newLikesArray.length,
+                    likeCount: newLikeCount,
                 }, {merge: true})
             }
         })

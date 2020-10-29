@@ -10,12 +10,12 @@ import Spinner from '../shared/UI/Spinner/Spinner';
 const NewsFeedPage = (props) => {
     //STATE & CONTEXT
     const {
-         getPostsHandler, allPosts,
-         nextPageHandler, prevPageHandler,
-         lastVisible,firstPostQueryId, lastPostQueryId,
-         getPostsReversedHandler, reversed,
-         orderByVal, setOrderbyVal,
-        } = useContext(firebasePost)
+        getPostsHandler, allPosts,
+        nextPageHandler, prevPageHandler,
+        firstVisible, lastVisible, firstPostQueryId, lastPostQueryId,
+        getPostsReversedHandler, reversed,
+        orderByVal, setOrderByVal,
+    } = useContext(firebasePost)
 
     const { getUser } = useContext(firebaseUser)
 
@@ -23,53 +23,54 @@ const NewsFeedPage = (props) => {
     useEffect(useCallback(() => {
         let mounted = true
         if (mounted) {
-            getPostsHandler({type: 'all'})
-            setOrderbyVal('timeMarkInMilliseconds')
+            getPostsHandler({ type: 'all' })
+            setOrderByVal('timeMarkInMilliseconds')
             getUser()
         }
         return () => mounted = false;
     }, [getPostsHandler, getUser]), [])
 
     //LOGIC
-
-    const nextPHandler = () => {
-        if(!reversed) {
-            nextPageHandler()
-        } else {
-            prevPageHandler()
+    let upAndDownButtonText = {
+        up: '',
+        down: '',
+    }
+    if (orderByVal === 'timeMarkInMilliseconds') {
+        upAndDownButtonText = {
+            up: 'Newsest First',
+            down: 'Oldest First'
+        }
+    } else if (orderByVal === 'likeCount') {
+        upAndDownButtonText = {
+            up: 'Most popular First',
+            down: 'Least Popular First'
         }
     }
 
-    const prevPHandler = () => {
-        if(!reversed) {
-            prevPageHandler()
-        } else {
-            nextPageHandler()
-        }
-    }
 
     //RENDER
-    let NewsFeedRender = <Spinner  centered />;
-    if (allPosts && lastVisible) {
-         NewsFeedRender = (
-         <div>
-         <NewsFeedMenu 
-             nextPage={nextPHandler}
-             prevPage={prevPHandler}
-             disablePrev={lastVisible.id === firstPostQueryId}
-             disableNext={lastVisible.id === lastPostQueryId}
-             reversed={reversed}
-             fromOldestToNewest={getPostsHandler}
-             fromNewestToOldest={getPostsReversedHandler}
-             orderByVal={orderByVal}
-         />
-         <NewsFeed allPosts={allPosts}  reversed={reversed} />
-         </div>
-         )
+    let NewsFeedRender = <Spinner centered />;
+    if (allPosts && lastVisible && firstVisible && firstPostQueryId && lastPostQueryId) {
+        NewsFeedRender = (
+            <div>
+                <NewsFeedMenu
+                    nextPage={nextPageHandler}
+                    prevPage={prevPageHandler}
+                    disablePrev={firstVisible.id === firstPostQueryId}
+                    disableNext={lastVisible.id === lastPostQueryId}
+                    reversed={reversed}
+                    fromOldestToNewest={getPostsHandler}
+                    fromNewestToOldest={getPostsReversedHandler}
+                    orderByVal={orderByVal}
+                    upAndDownButtonText={upAndDownButtonText}
+                />
+                <NewsFeed allPosts={allPosts} reversed={reversed} />
+            </div>
+        )
     }
 
 
-return NewsFeedRender
+    return NewsFeedRender
 
 }
 
